@@ -1,0 +1,13 @@
+#mapid { height: 180px; }
+#currentlocNews{
+  width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+    border-color: black;
+    background-color: aqua;
+    scroll-behavior: auto;
+    border-color: black;
+    border-style: double;
+
+
+}
