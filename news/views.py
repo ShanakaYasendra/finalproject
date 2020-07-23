@@ -10,6 +10,9 @@ def index(request):
     r= requests.get(url.format(city)).json()
     #print(r)
 
+    country_list=' http://api.worldbank.org/v2/country/{}?format=json'
+    cr=requests.get(country_list.format(country)).json()
+    print(cr)
     cov_url='https://covid-19.dataflowkit.com/v1/:{}'
     #'https://covid-19.dataflowkit.com/v1'
     #'https://localcoviddata.com/covid19/v1/cases/eucdc?country=AU&daysInPast=4'
@@ -20,8 +23,16 @@ def index(request):
     #'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=391409f008894221b310aec8d3d276d5'
     #https://newsapi.org/v2/top-headlines?country=us&apiKey=391409f008894221b310aec8d3d276d5
     news_response=requests.get(news_url.format(country)).json()
-    print(news_response)
+    #print(news_response)
 
+
+
+    country_de={
+        'region': cr[1],
+        #'latitude':cr[1]['latitude']
+    }
+
+    
     
     city_weather={
         'city':city,
@@ -38,10 +49,9 @@ def index(request):
     context={
         'city_weather': city_weather,
         'country_news':country_news,
-        'cov_res':cov_res
+        'cov_res':cov_res,
+        'country': country_de
+
     }
-    #geodata = response.json()
-    #return render(request, 'core/home.html', {
-       # 'ip': geodata['ip'],
-       # 'country': geodata['country_name']
+   
     return render(request,'weather/index.html',context)
