@@ -12,13 +12,11 @@ def index(request):
 
     country_list=' http://api.worldbank.org/v2/country/{}?format=json'
     cr=requests.get(country_list.format(country)).json()
-    print(cr)
-    cov_url='https://covid-19.dataflowkit.com/v1/:{}'
-    #'https://covid-19.dataflowkit.com/v1'
-    #'https://localcoviddata.com/covid19/v1/cases/eucdc?country=AU&daysInPast=4'
-    #
-    cov_res= requests.get(cov_url.format(country)).json()
-
+    #print(cr)
+    con_pop_url='http://api.worldbank.org/v2/country/{}/indicator/SP.POP.TOTL?per_page=1&format=json'
+   
+    con_pop_res= requests.get(con_pop_url.format(country)).json()
+    print(con_pop_res)
     news_url='https://newsapi.org/v2/top-headlines?country={}&apiKey=391409f008894221b310aec8d3d276d5'
     #'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=391409f008894221b310aec8d3d276d5'
     #https://newsapi.org/v2/top-headlines?country=us&apiKey=391409f008894221b310aec8d3d276d5
@@ -49,7 +47,7 @@ def index(request):
     context={
         'city_weather': city_weather,
         'country_news':country_news,
-        'cov_res':cov_res,
+
         'country': country_de
 
     }
