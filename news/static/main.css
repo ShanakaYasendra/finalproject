@@ -1,7 +1,9 @@
-#mapid { height: 180px; }
+#mapid {
+   height: 180px;
+  }
 #currentlocNews{
-  width: fit-content;
-    height: fit-content;
+    width: 400px;
+    height: 400px;
     border-radius: 10px;
     border-color: black;
     background-color: aqua;
