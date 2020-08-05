@@ -2,12 +2,13 @@
    height: 180px;
   }
 #currentlocNews{
-    width: 400px;
+    width: 600px;
     height: 400px;
     border-radius: 10px;
     border-color: black;
-    background-color: aqua;
-    scroll-behavior: auto;
+    background-color: black;
+    color: white;
+    overflow-y: auto;
     border-color: black;
     border-style: double;
 
