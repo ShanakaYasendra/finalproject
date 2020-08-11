@@ -1,0 +1,212 @@
+id,iso2Code,name,region/id,region/iso2code,region/value
+ABW,AW,Aruba,LCN,ZJ,Latin America & Caribbean 
+AFG,AF,Afghanistan,SAS,8S,South Asia
+AGO,AO,Angola,SSF,ZG,Sub-Saharan Africa 
+ALB,AL,Albania,ECS,Z7,Europe & Central Asia
+AND,AD,Andorra,ECS,Z7,Europe & Central Asia
+ARE,AE,United Arab Emirates,MEA,ZQ,Middle East & North Africa
+ARG,AR,Argentina,LCN,ZJ,Latin America & Caribbean 
+ARM,AM,Armenia,ECS,Z7,Europe & Central Asia
+ASM,AS,American Samoa,EAS,Z4,East Asia & Pacific
+ATG,AG,Antigua and Barbuda,LCN,ZJ,Latin America & Caribbean 
+AUS,AU,Australia,EAS,Z4,East Asia & Pacific
+AUT,AT,Austria,ECS,Z7,Europe & Central Asia
+AZE,AZ,Azerbaijan,ECS,Z7,Europe & Central Asia
+BDI,BI,Burundi,SSF,ZG,Sub-Saharan Africa 
+BEL,BE,Belgium,ECS,Z7,Europe & Central Asia
+BEN,BJ,Benin,SSF,ZG,Sub-Saharan Africa 
+BFA,BF,Burkina Faso,SSF,ZG,Sub-Saharan Africa 
+BGD,BD,Bangladesh,SAS,8S,South Asia
+BGR,BG,Bulgaria,ECS,Z7,Europe & Central Asia
+BHR,BH,Bahrain,MEA,ZQ,Middle East & North Africa
+BHS,BS,"Bahamas, The",LCN,ZJ,Latin America & Caribbean 
+BIH,BA,Bosnia and Herzegovina,ECS,Z7,Europe & Central Asia
+BLR,BY,Belarus,ECS,Z7,Europe & Central Asia
+BLZ,BZ,Belize,LCN,ZJ,Latin America & Caribbean 
+BMU,BM,Bermuda,NAC,XU,North America
+BOL,BO,Bolivia,LCN,ZJ,Latin America & Caribbean 
+BRA,BR,Brazil,LCN,ZJ,Latin America & Caribbean 
+BRB,BB,Barbados,LCN,ZJ,Latin America & Caribbean 
+BRN,BN,Brunei Darussalam,EAS,Z4,East Asia & Pacific
+BTN,BT,Bhutan,SAS,8S,South Asia
+BWA,BW,Botswana,SSF,ZG,Sub-Saharan Africa 
+CAF,CF,Central African Republic,SSF,ZG,Sub-Saharan Africa 
+CAN,CA,Canada,NAC,XU,North America
+CHE,CH,Switzerland,ECS,Z7,Europe & Central Asia
+CHL,CL,Chile,LCN,ZJ,Latin America & Caribbean 
+CHN,CN,China,EAS,Z4,East Asia & Pacific
+CIV,CI,Cote d'Ivoire,SSF,ZG,Sub-Saharan Africa 
+CMR,CM,Cameroon,SSF,ZG,Sub-Saharan Africa 
+COD,CD,"Congo, Dem. Rep.",SSF,ZG,Sub-Saharan Africa 
+COG,CG,"Congo, Rep.",SSF,ZG,Sub-Saharan Africa 
+COL,CO,Colombia,LCN,ZJ,Latin America & Caribbean 
+COM,KM,Comoros,SSF,ZG,Sub-Saharan Africa 
+CPV,CV,Cabo Verde,SSF,ZG,Sub-Saharan Africa 
+CRI,CR,Costa Rica,LCN,ZJ,Latin America & Caribbean 
+CUB,CU,Cuba,LCN,ZJ,Latin America & Caribbean 
+CYM,KY,Cayman Islands,LCN,ZJ,Latin America & Caribbean 
+CYP,CY,Cyprus,ECS,Z7,Europe & Central Asia
+CZE,CZ,Czech Republic,ECS,Z7,Europe & Central Asia
+DEU,DE,Germany,ECS,Z7,Europe & Central Asia
+DJI,DJ,Djibouti,MEA,ZQ,Middle East & North Africa
+DMA,DM,Dominica,LCN,ZJ,Latin America & Caribbean 
+DNK,DK,Denmark,ECS,Z7,Europe & Central Asia
+DOM,DO,Dominican Republic,LCN,ZJ,Latin America & Caribbean 
+DZA,DZ,Algeria,MEA,ZQ,Middle East & North Africa
+ECU,EC,Ecuador,LCN,ZJ,Latin America & Caribbean 
+EGY,EG,"Egypt, Arab Rep.",MEA,ZQ,Middle East & North Africa
+ERI,ER,Eritrea,SSF,ZG,Sub-Saharan Africa 
+ESP,ES,Spain,ECS,Z7,Europe & Central Asia
+EST,EE,Estonia,ECS,Z7,Europe & Central Asia
+ETH,ET,Ethiopia,SSF,ZG,Sub-Saharan Africa 
+FIN,FI,Finland,ECS,Z7,Europe & Central Asia
+FJI,FJ,Fiji,EAS,Z4,East Asia & Pacific
+FRA,FR,France,ECS,Z7,Europe & Central Asia
+FRO,FO,Faroe Islands,ECS,Z7,Europe & Central Asia
+FSM,FM,"Micronesia, Fed. Sts.",EAS,Z4,East Asia & Pacific
+GAB,GA,Gabon,SSF,ZG,Sub-Saharan Africa 
+GBR,GB,United Kingdom,ECS,Z7,Europe & Central Asia
+GEO,GE,Georgia,ECS,Z7,Europe & Central Asia
+GHA,GH,Ghana,SSF,ZG,Sub-Saharan Africa 
+GIN,GN,Guinea,SSF,ZG,Sub-Saharan Africa 
+GMB,GM,"Gambia, The",SSF,ZG,Sub-Saharan Africa 
+GNB,GW,Guinea-Bissau,SSF,ZG,Sub-Saharan Africa 
+GNQ,GQ,Equatorial Guinea,SSF,ZG,Sub-Saharan Africa 
+GRC,GR,Greece,ECS,Z7,Europe & Central Asia
+GRD,GD,Grenada,LCN,ZJ,Latin America & Caribbean 
+GRL,GL,Greenland,ECS,Z7,Europe & Central Asia
+GTM,GT,Guatemala,LCN,ZJ,Latin America & Caribbean 
+GUM,GU,Guam,EAS,Z4,East Asia & Pacific
+GUY,GY,Guyana,LCN,ZJ,Latin America & Caribbean 
+HKG,HK,"Hong Kong SAR, China",EAS,Z4,East Asia & Pacific
+HND,HN,Honduras,LCN,ZJ,Latin America & Caribbean 
+HRV,HR,Croatia,ECS,Z7,Europe & Central Asia
+HTI,HT,Haiti,LCN,ZJ,Latin America & Caribbean 
+HUN,HU,Hungary,ECS,Z7,Europe & Central Asia
+IDN,ID,Indonesia,EAS,Z4,East Asia & Pacific
+IMN,IM,Isle of Man,ECS,Z7,Europe & Central Asia
+IND,IN,India,SAS,8S,South Asia
+IRL,IE,Ireland,ECS,Z7,Europe & Central Asia
+IRN,IR,"Iran, Islamic Rep.",MEA,ZQ,Middle East & North Africa
+IRQ,IQ,Iraq,MEA,ZQ,Middle East & North Africa
+ISL,IS,Iceland,ECS,Z7,Europe & Central Asia
+ISR,IL,Israel,MEA,ZQ,Middle East & North Africa
+ITA,IT,Italy,ECS,Z7,Europe & Central Asia
+JAM,JM,Jamaica,LCN,ZJ,Latin America & Caribbean 
+JOR,JO,Jordan,MEA,ZQ,Middle East & North Africa
+JPN,JP,Japan,EAS,Z4,East Asia & Pacific
+KAZ,KZ,Kazakhstan,ECS,Z7,Europe & Central Asia
+KEN,KE,Kenya,SSF,ZG,Sub-Saharan Africa 
+KGZ,KG,Kyrgyz Republic,ECS,Z7,Europe & Central Asia
+KHM,KH,Cambodia,EAS,Z4,East Asia & Pacific
+KIR,KI,Kiribati,EAS,Z4,East Asia & Pacific
+KNA,KN,St. Kitts and Nevis,LCN,ZJ,Latin America & Caribbean 
+KOR,KR,"Korea, Rep.",EAS,Z4,East Asia & Pacific
+KWT,KW,Kuwait,MEA,ZQ,Middle East & North Africa
+LAO,LA,Lao PDR,EAS,Z4,East Asia & Pacific
+LBN,LB,Lebanon,MEA,ZQ,Middle East & North Africa
+LBR,LR,Liberia,SSF,ZG,Sub-Saharan Africa 
+LBY,LY,Libya,MEA,ZQ,Middle East & North Africa
+LCA,LC,St. Lucia,LCN,ZJ,Latin America & Caribbean 
+LIE,LI,Liechtenstein,ECS,Z7,Europe & Central Asia
+LKA,LK,Sri Lanka,SAS,8S,South Asia
+LSO,LS,Lesotho,SSF,ZG,Sub-Saharan Africa 
+LTU,LT,Lithuania,ECS,Z7,Europe & Central Asia
+LUX,LU,Luxembourg,ECS,Z7,Europe & Central Asia
+LVA,LV,Latvia,ECS,Z7,Europe & Central Asia
+MAC,MO,"Macao SAR, China",EAS,Z4,East Asia & Pacific
+MAR,MA,Morocco,MEA,ZQ,Middle East & North Africa
+MCO,MC,Monaco,ECS,Z7,Europe & Central Asia
+MDA,MD,Moldova,ECS,Z7,Europe & Central Asia
+MDG,MG,Madagascar,SSF,ZG,Sub-Saharan Africa 
+MDV,MV,Maldives,SAS,8S,South Asia
+MEX,MX,Mexico,LCN,ZJ,Latin America & Caribbean 
+MHL,MH,Marshall Islands,EAS,Z4,East Asia & Pacific
+MKD,MK,North Macedonia,ECS,Z7,Europe & Central Asia
+MLI,ML,Mali,SSF,ZG,Sub-Saharan Africa 
+MLT,MT,Malta,MEA,ZQ,Middle East & North Africa
+MMR,MM,Myanmar,EAS,Z4,East Asia & Pacific
+MNE,ME,Montenegro,ECS,Z7,Europe & Central Asia
+MNG,MN,Mongolia,EAS,Z4,East Asia & Pacific
+MNP,MP,Northern Mariana Islands,EAS,Z4,East Asia & Pacific
+MOZ,MZ,Mozambique,SSF,ZG,Sub-Saharan Africa 
+MRT,MR,Mauritania,SSF,ZG,Sub-Saharan Africa 
+MUS,MU,Mauritius,SSF,ZG,Sub-Saharan Africa 
+MWI,MW,Malawi,SSF,ZG,Sub-Saharan Africa 
+MYS,MY,Malaysia,EAS,Z4,East Asia & Pacific
+NAM,NA,Namibia,SSF,ZG,Sub-Saharan Africa 
+NCL,NC,New Caledonia,EAS,Z4,East Asia & Pacific
+NER,NE,Niger,SSF,ZG,Sub-Saharan Africa 
+NGA,NG,Nigeria,SSF,ZG,Sub-Saharan Africa 
+NIC,NI,Nicaragua,LCN,ZJ,Latin America & Caribbean 
+NLD,NL,Netherlands,ECS,Z7,Europe & Central Asia
+NOR,NO,Norway,ECS,Z7,Europe & Central Asia
+NPL,NP,Nepal,SAS,8S,South Asia
+NRU,NR,Nauru,EAS,Z4,East Asia & Pacific
+NZL,NZ,New Zealand,EAS,Z4,East Asia & Pacific
+OMN,OM,Oman,MEA,ZQ,Middle East & North Africa
+PAK,PK,Pakistan,SAS,8S,South Asia
+PAN,PA,Panama,LCN,ZJ,Latin America & Caribbean 
+PER,PE,Peru,LCN,ZJ,Latin America & Caribbean 
+PHL,PH,Philippines,EAS,Z4,East Asia & Pacific
+PLW,PW,Palau,EAS,Z4,East Asia & Pacific
+PNG,PG,Papua New Guinea,EAS,Z4,East Asia & Pacific
+POL,PL,Poland,ECS,Z7,Europe & Central Asia
+PRI,PR,Puerto Rico,LCN,ZJ,Latin America & Caribbean 
+PRK,KP,North Korea,EAS,Z4,East Asia & Pacific
+PRT,PT,Portugal,ECS,Z7,Europe & Central Asia
+PRY,PY,Paraguay,LCN,ZJ,Latin America & Caribbean 
+PYF,PF,French Polynesia,EAS,Z4,East Asia & Pacific
+QAT,QA,Qatar,MEA,ZQ,Middle East & North Africa
+ROU,RO,Romania,ECS,Z7,Europe & Central Asia
+RUS,RU,Russian Federation,ECS,Z7,Europe & Central Asia
+RWA,RW,Rwanda,SSF,ZG,Sub-Saharan Africa 
+SAU,SA,Saudi Arabia,MEA,ZQ,Middle East & North Africa
+SDN,SD,Sudan,SSF,ZG,Sub-Saharan Africa 
+SEN,SN,Senegal,SSF,ZG,Sub-Saharan Africa 
+SGP,SG,Singapore,EAS,Z4,East Asia & Pacific
+SLB,SB,Solomon Islands,EAS,Z4,East Asia & Pacific
+SLE,SL,Sierra Leone,SSF,ZG,Sub-Saharan Africa 
+SLV,SV,El Salvador,LCN,ZJ,Latin America & Caribbean 
+SMR,SM,San Marino,ECS,Z7,Europe & Central Asia
+SOM,SO,Somalia,SSF,ZG,Sub-Saharan Africa 
+SRB,RS,Serbia,ECS,Z7,Europe & Central Asia
+SSD,SS,South Sudan,SSF,ZG,Sub-Saharan Africa 
+STP,ST,Sao Tome and Principe,SSF,ZG,Sub-Saharan Africa 
+SUR,SR,Suriname,LCN,ZJ,Latin America & Caribbean 
+SVK,SK,Slovak Republic,ECS,Z7,Europe & Central Asia
+SVN,SI,Slovenia,ECS,Z7,Europe & Central Asia
+SWE,SE,Sweden,ECS,Z7,Europe & Central Asia
+SWZ,SZ,Eswatini,SSF,ZG,Sub-Saharan Africa 
+SYC,SC,Seychelles,SSF,ZG,Sub-Saharan Africa 
+SYR,SY,Syrian Arab Republic,MEA,ZQ,Middle East & North Africa
+TCA,TC,Turks and Caicos Islands,LCN,ZJ,Latin America & Caribbean 
+TCD,TD,Chad,SSF,ZG,Sub-Saharan Africa 
+TGO,TG,Togo,SSF,ZG,Sub-Saharan Africa 
+THA,TH,Thailand,EAS,Z4,East Asia & Pacific
+TJK,TJ,Tajikistan,ECS,Z7,Europe & Central Asia
+TKM,TM,Turkmenistan,ECS,Z7,Europe & Central Asia
+TLS,TL,Timor-Leste,EAS,Z4,East Asia & Pacific
+TON,TO,Tonga,EAS,Z4,East Asia & Pacific
+TTO,TT,Trinidad and Tobago,LCN,ZJ,Latin America & Caribbean 
+TUN,TN,Tunisia,MEA,ZQ,Middle East & North Africa
+TUR,TR,Turkey,ECS,Z7,Europe & Central Asia
+TUV,TV,Tuvalu,EAS,Z4,East Asia & Pacific
+TZA,TZ,Tanzania,SSF,ZG,Sub-Saharan Africa 
+UGA,UG,Uganda,SSF,ZG,Sub-Saharan Africa 
+UKR,UA,Ukraine,ECS,Z7,Europe & Central Asia
+URY,UY,Uruguay,LCN,ZJ,Latin America & Caribbean 
+USA,US,United States America,NAC,XU,North America
+UZB,UZ,Uzbekistan,ECS,Z7,Europe & Central Asia
+VCT,VC,St. Vincent and the Grenadines,LCN,ZJ,Latin America & Caribbean 
+VEN,VE,"Venezuela, RB",LCN,ZJ,Latin America & Caribbean 
+VGB,VG,British Virgin Islands,LCN,ZJ,Latin America & Caribbean 
+VIR,VI,Virgin Islands (U.S.),LCN,ZJ,Latin America & Caribbean 
+VNM,VN,Vietnam,EAS,Z4,East Asia & Pacific
+VUT,VU,Vanuatu,EAS,Z4,East Asia & Pacific
+WSM,WS,Samoa,EAS,Z4,East Asia & Pacific
+XKX,XK,Kosovo,ECS,Z7,Europe & Central Asia
+YEM,YE,"Yemen, Rep.",MEA,ZQ,Middle East & North Africa
+ZAF,ZA,South Africa,SSF,ZG,Sub-Saharan Africa 
+ZMB,ZM,Zambia,SSF,ZG,Sub-Saharan Africa 
+ZWE,ZW,Zimbabwe,SSF,ZG,Sub-Saharan Africa 

@@ -51,12 +51,31 @@ $.ajax({
 
             success : function(data) {
           console.log(data);
-               document.getElementById('getLocation').innerHTML+=data.main.temp;
+
             var img=   document.createElement('img')
             var src=data.weather[0].icon;
             img.setAttribute("src","https://openweathermap.org/img/w/"+src+".png")
             var imgLoc= document.getElementById('image');
-            imgLoc.appendChild(img)
+
+
+          let mainpageDiv=document.getElementById('weather');
+          let ptag= document.createElement('p');
+          //var celcius= &#8451;
+          ptag.innerHTML+=data.main.temp;
+          if( typeof(mainpageDiv) !='undefined' && mainpageDiv != null)
+          {
+              mainpageDiv.appendChild(img);
+              mainpageDiv.appendChild(ptag);
+          }
+          else {
+                imgLoc.appendChild(img)
+                 document.getElementById('getLocation').innerHTML+=data.main.temp;
+          }
+
+
+
+
+
            }
          }
 

@@ -8,36 +8,15 @@
 {% block body%}
 
 
-
+<br>
+<br>
 <div class="row">
-    <div id ="currentlocNews">
-
-        {% for row in country_news.articles %}
-        <br>
-        <table>
-          <tr>
-            <th><a href="{{row.url}}"><span>{{row.title}}</span></a></th>
-            <td>"{{row.publishedAt}}"</td>
-          </tr>
-            <tr>
-              <td>{{row.description}}</td>
-              <td><img src= '{{ row.urlToImage }}' style="width: 100px; height: 100px;"></td>
-            </tr>
 
 
-
-
-
-        </table>
-
-        {% endfor %}
-
-      </div>
-
-<div id ="worldNews">
-  <table>
+<div id ="CountryDetails">
+  <table id="country">
   {% for row in country.region %}
-  <br>
+
 
     <tr>
       <th>{{row.name}}</th>
@@ -55,34 +34,129 @@
     <tr>
       <th>Capital City</th>
       <td id ="capitalCity">{{row.capitalCity}}</td>
-      <td id="longitude" value="{{row.longitude}}">{{row.longitude}}</td>
-      <td id="latitude" value="{{row.latitude}}">{{row.latitude}}</td>
-    </tr>
-    <tr>
-      <td>
-      <div id="map" style="width: 600px; height: 400px;"></div>
-      </td>
-    </tr>
-
-      {%for i in country_population.1 %}
+      </tr>
       <tr>
-      <th>Population</th>
+        <th>Longitude</th><td id="longitude" value="{{row.longitude}}">{{row.longitude}}</td>
+        </tr>
+        <tr>
+          <th>Latitude</th>
+          <td id="latitude" value="{{row.latitude}}">{{row.latitude}}</td>
+        </tr>
 
-      <td>{{i.value}}</td>
-      <th>Year</th>
-      <td>{{i.date}}</td>
-    </tr>
-      {%endfor%}
+        {%for i in country_population.1 %}
+        <tr>
+        <th>Population</th>
 
-    {% endfor %}
+        <td>{{i.value}}</td>
+        <th>Year</th>
+        <td>{{i.date}}</td>
+      </tr>
+        {%endfor%}
+
+      {% endfor %}
+
 
   </table>
-
-
-
 </div>
 </div>
 
+<div class="row">
+  <div id="map" style="width: 400px; height: 400px;"></div>
+
+<div>
+{% if travel_advice.score >  4.5 and travel_advice.score <= 5 %}
+
+  <div class="alert alert-primary" role="alert">
+    <span>Score :</span> {{travel_advice.score}}
+    <br>
+    <span>Updated :</span> {{travel_advice.updated}}
+    <br>
+  <span>Source :</span> <a href={{travel_advice.source}}>{{travel_advice.source}}</a>
+  <br>
+      <p>Extreme Warning (index value: 4.5 - 5)</p>
+
+      <p>You should avoid any trips. <br>A high warning index is a sound indicator of potential harm to your health and well-being.</p>
+</div>
+
+{% endif %}
+{% if travel_advice.score >  3.5 and travel_advice.score <= 4.5 %}
+<div class="alert alert-primary" role="alert">
+  <span>Score :</span> {{travel_advice.score}}
+  <br>
+  <span>Updated :</span> {{travel_advice.updated}}
+  <br>
+<span>Source :</span> <a href={{travel_advice.source}}>{{travel_advice.source}}</a>
+<br>
+    <p>High Risk (index value: 3.5 - 4.5)</p>
+
+    <p>Travel should be reduced to a necessary minimum and be conducted with good preparation and high attention.</p>
+</div>
+
+{% endif %}
+
+{% if travel_advice.score >  2.5 and travel_advice.score <= 3.5 %}
+<div class="alert alert-primary" role="alert">
+  <span>Score :</span> {{travel_advice.score}}
+  <br>
+  <span>Updated :</span> {{travel_advice.updated}}
+  <br>
+<span>Source :</span> <a href={{travel_advice.source}}>{{travel_advice.source}}</a>
+<br>
+    <p>Medium Risk (index value: 2.5 - 3.5)</p>
+
+    <p>Warnings often relate to specific regions within a country.<br> However, high attention is still advised when moving around.</p>
+</div>
+
+{% endif %}
+
+{% if travel_advice.score >  0 and travel_advice.score <= 2.5 %}
+<div class="alert alert-primary" role="alert">
+  <span>Score :</span> {{travel_advice.score}}
+  <br>
+  <span>Updated :</span> {{travel_advice.updated}}
+  <br>
+<span>Source :</span> <a href={{travel_advice.source}}>{{travel_advice.source}}</a>
+<br>
+    <p>Low Risk (index value: 0 - 2.5)</p>
+
+    <p>Usually this is an indicator that travelling in this country is relatively safe.<br> Higher attention is advised with values > 1.</p>
+</div>
+
+{% endif %}
+</div>
+</div>
+<div class="row">
+  <caption>{{country_news.country}} NEWS</caption>
+<div id ="News">
+  <br>
+
+
+
+{% for row in country_news.articles %}
+<br>
+<br>
+
+<table>
+
+  <tr>
+    <th><a href="{{row.url}}"><span>{{row.title}}</span></a></th>
+    <td>"{{row.publishedAt}}"</td>
+  </tr>
+    <tr>
+      <td>{{row.description}}</td>
+      <td><img src= '{{ row.urlToImage }}' style="width: 100px; height: 100px;"></td>
+    </tr>
+
+
+
+
+
+</table>
+
+{% endfor %}
+
+
+</div>
 
 
 
@@ -126,3 +200,4 @@
 
 </script>
     {% endblock %}
+</div>

@@ -7,9 +7,27 @@
 
     {% endblock %}
     {% block body%}
-    <div id="searchCountry">
-      <input type="text" name="country">
+
+    <form id="search" method="POST" action="{% url 'searchData' %}">
+        {% csrf_token %}
+
+        <div class="container" id="weather">
+
+
+
+        </div>
+          <span style='font-size:100px;'>&#8451;</span>
+  <div class="form-row align-items-center">
+    <div class="col-auto">
+
+      <input type="text" name="searchVal" class="form-control mb-2" id="searchVal" placeholder="Enter Country to Search" size="80">
     </div>
 
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    </div>
+  </div>
+</form>
 
         {% endblock %}

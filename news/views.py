@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.db.models import Q
 import requests
 import csv,io
 
 
-from .models import Country
+from .models import Country,CountryDetails,CountryCity
+
 # Create your views here.
 
 
@@ -31,13 +33,20 @@ def process_loc(request):
     }
     return render(request,'weather/index.html',context)
 
-def resultpage(request):
-    country='us'
+def searchData(request):
 
-    #url='https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&&units=metric&appid=28719ed44bffb67e022e502067349ca0'
-    city= 'Melbourne, AU'
-    r= requests.get(url.format(city)).json()
-    #print(r)
+    if request.method =='POST':
+        try :
+            searchVal = request.POST["searchVal"]
+            searchVal=searchVal.upper()
+            country_Q= Country.objects.get(Q(name=searchVal.capitalize())|Q(countryId=searchVal.upper())|Q(iso2Code=searchVal.upper()))
+            #country_filter =Country.objects.filter(name=searchVal.capitalize())| Country.objects.filter(countryId=searchVal.upper())
+            print(country_list.name)
+        except Exception as e:
+            print(e)
+    country=country_Q.iso2Code
+    print(country)
+
 
     country_list=' http://api.worldbank.org/v2/country/{}?format=json'
     cr=requests.get(country_list.format(country)).json()
@@ -71,19 +80,25 @@ def resultpage(request):
 
 
     #}
+    print(travel_res['data'][country]['advisory']['updated'])
     country_travel_advice={
+    'score': travel_res['data'][country]['advisory']['score'],
+    'updated':travel_res['data'][country]['advisory']['updated'],
+    'source':travel_res['data'][country]['advisory']['source']
+
 
     }
     country_news={
         'total': news_response['totalResults'],
-        'articles':news_response['articles']
+        'articles':news_response['articles'],
+        'country':country_Q.name
     }
     context={
         #'city_weather': city_weather,
         'country_news':country_news,
         'country_population': con_pop_res,
         'country': country_de,
-        'travel_advice':travel_res
+        'travel_advice':country_travel_advice
 
     }
 
@@ -98,24 +113,62 @@ def contact_upload(request):
     if request.method == "GET":
         return render(request, template,prompt)
     csv_file= request.FILES["file"]
+    category=  request.POST.getlist('inputs')
+    #print(category)
     #if not csv_file.name.endwith('.csv'):
        # message.error(request,"wrong file format")
     data_set =csv_file.read().decode('UTF-8')
     io_string =io.StringIO(data_set)
     next(io_string)
+    if category[0]=='country':
+        for colum in csv.reader(io_string, delimiter=',',quotechar='|'):
+           _, created = Country.objects.update_or_create(
 
-    for colum in csv.reader(io_string, delimiter=',',quotechar='|'):
-        _, created = Country.objects.update_or_create(
             countryId=colum[0],
             iso2Code=colum[1],
             name=colum[2],
             region=colum[3],
             regionIso=colum[4],
-            regionValue= colum[5],
-            capitalCity= colum[6],
-            longitude=colum[7],
-            latitude= colum[8]
+            regionValue= colum[5]
+            )
+        print(category)
+    elif category[0]=='countryDetails':
+        print('selection two')
+        for colum in csv.reader(io_string, delimiter=',',quotechar='|'):
+            _, created = CountryDetails.objects.update_or_create(
+
+            countryId=colum[0],
+            capitalCity= colum[1],
+            longitude=colum[2],
+            latitude= colum[3]
+
+        )
+    elif category[0]=='city':
+        for colum in csv.reader(io_string, delimiter=',',quotechar='|'):
+            _, created = CountryCity.objects.update_or_create(
+
+            countryName= colum[0],
+            city=colum[1],
+            geonameid= colum[2]
 
         )
     context ={}
     return render(request, template, context)
+
+def searchforAttraction(request):
+    location='colombo'
+    location_url="https://api.opentripmap.com/0.1/en/places/geoname?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&name={}&format=json"
+
+
+    location_res=requests.get(location_url.format(location)).json()
+    longitude=location_res['lon']
+    latitude=location_res['lat']
+
+    #https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1000&limit=5&offset=0&lon=79.84868&lat=6.93548&rate=2&format=count
+    attaction_url='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1000&limit=5&offset=0&lon={}&lat={}&rate=2&format=json'
+    attaction_res=requests.get(attaction_url.format(lon,lat))
+    context={
+    'attraction':attaction_res
+    }
+
+    return render(request,'location.html',context)
