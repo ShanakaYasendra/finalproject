@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+
+
+{% endblock %}
+{% block body%}
+
+<div class="row">
+  <div class="col-12 col-lg-5">
+
+  attention
+  {% for i in attraction.features %}
+<div class="list-group" id= "list">
+
+
+    <a href="{% url 'attDeatils' i.properties.xid %}" class="list-group-item list-group-item-action active" data-id={{i.properties.xid}}>
+  <h5 class="list-group-item-heading">{{i.properties.name}}</h5>
+  <p class="list-group-item-text"></p>
+    </a>
+
+</div>
+  {% endfor %}
+<div class="col-12 col-lg-7">
+  <div class="alert" id='poi'>
+    <h3>{{attraction.name}}</h3>
+
+  </div>
+
+
+  </div>
+
+</div>
+
+
+
+
+
+{% endblock%}

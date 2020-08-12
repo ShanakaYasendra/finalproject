@@ -46,7 +46,7 @@ crossorigin=""></script>
       <div class="col">
         <!-- heading area --->
         <div class="heading" id ="caption_id">
-          <h1>Your Daily News</h1>
+          <h1>Fun With Countries</h1>
 
         </div>
 
@@ -79,16 +79,23 @@ crossorigin=""></script>
                               <a class="nav-link" href="#">Sign in</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="#">Sign Out</a>
+                              <div class="widget">              
+                                <div id="clock"></div>
+                              </div>
                             </li>
 
                           </ul>
                         </div>
 
+                      <div class="widget">
+
                         <span>{{city_weather.city}} </span>
 
                         <span id="getLocation">{{city_weather.temperature}}  </span>
+                        <span>&#8451;</span>
                         <span id="image"></span>
+                      </div>
+
                         <!--img src="https://openweathermap.org/img/w/{{city_weather.icon}}.png"-->
 
 
@@ -111,7 +118,7 @@ crossorigin=""></script>
 
               </div>
               <div class="col-lg-2">
-                  <div id="clock"></div>
+
               </div>
 
           </div>

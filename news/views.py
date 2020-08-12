@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.db.models import Q
 import requests
@@ -41,7 +41,10 @@ def searchData(request):
             searchVal=searchVal.upper()
             country_Q= Country.objects.get(Q(name=searchVal.capitalize())|Q(countryId=searchVal.upper())|Q(iso2Code=searchVal.upper()))
             #country_filter =Country.objects.filter(name=searchVal.capitalize())| Country.objects.filter(countryId=searchVal.upper())
-            print(country_list.name)
+            #print(country_list.name)
+
+            countryDetails_q= CountryDetails.objects.get(countryId=country_Q.countryId)
+            print(countryDetails_q.longitude)
         except Exception as e:
             print(e)
     country=country_Q.iso2Code
@@ -63,11 +66,17 @@ def searchData(request):
 
     travel_url='https://www.travel-advisory.info/api?countrycode={}?format=json'
     travel_res=requests.get(travel_url.format(country)).json()
-    #print(travel_res)
+
 
     country_de={
-        'region': cr[1],
-        #'latitude':cr[1]['latitude']
+        #'region': cr[1]['incomeLevel']['value'],
+        'name':country_Q.name,
+        'region':country_Q.region,
+        'iso2Code':country_Q.iso2Code,
+        'latitude':countryDetails_q.latitude,
+        'longitude':countryDetails_q.longitude,
+        'capitalCity':countryDetails_q.capitalCity,
+        'flag':country_Q.iso2Code.lower()
     }
 
 
@@ -156,19 +165,50 @@ def contact_upload(request):
     return render(request, template, context)
 
 def searchforAttraction(request):
-    location='colombo'
-    location_url="https://api.opentripmap.com/0.1/en/places/geoname?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&name={}&format=json"
+    print('hello')
+    if request.method =='POST':
+
+        location=request.POST['city']
+        radius=request.POST['radius']
+        #location='colombo'
+        print(location)
+        location_url="https://api.opentripmap.com/0.1/en/places/geoname?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&name={}&format=json"
 
 
-    location_res=requests.get(location_url.format(location)).json()
-    longitude=location_res['lon']
-    latitude=location_res['lat']
+        location_res=requests.get(location_url.format(location)).json()
+        print(location_res['lat'])
+        print(location_res['lon'])
+        longitude=location_res['lon']
+        latitude=location_res['lat']
 
     #https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1000&limit=5&offset=0&lon=79.84868&lat=6.93548&rate=2&format=count
-    attaction_url='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1000&limit=5&offset=0&lon={}&lat={}&rate=2&format=json'
-    attaction_res=requests.get(attaction_url.format(lon,lat))
-    context={
-    'attraction':attaction_res
-    }
+
+        attaction_url='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1&limit=5&offset=0&lon={}&lat={}&rate=2&format=json'
+        attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius={}000&offset=0&lon={}&lat={}&rate=2'
+        attaction_res=requests.get(attaction_res.format(radius,longitude,latitude)).json()
+        print(attaction_res)
+        context={
+        'attraction':attaction_res
+        }
 
     return render(request,'location.html',context)
+def attDeatils(request,xid):
+
+    attraction_url='https://api.opentripmap.com/0.1/en/places/xid/N3163979473?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&format=json'
+    attraction_res=requests.get(attraction_url.format()).json()
+
+    image=attraction_res['image']
+    text= attraction_res['wikipedia_extracts']['text']
+    name= attraction_res['wikipedia_extracts']['title']
+
+    print(text)
+    attraction={
+    'image':image,
+    'text':text,
+    'name':name
+    }
+
+    context={
+    'attraction':attraction
+    }
+    return redirect(context)

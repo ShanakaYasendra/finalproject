@@ -10,38 +10,35 @@
 
 <br>
 <br>
+
+<!--Country Details --->
 <div class="row">
 
 
 <div id ="CountryDetails">
   <table id="country">
-  {% for row in country.region %}
+
 
 
     <tr>
-      <th>{{row.name}}</th>
-      <th>{{row.iso2Code}}</th>
+      <th>Country Name</th><th>{{country.name}}</th>
+
+
+      </tr>
+      <tr>
+      <th>Country ISO Code</th><th>{{country.iso2Code}}</th>
 
     </tr>
      <tr>
        <th>Region</th>
-       <td>{{row.region.value}}</td>
+       <td>{{country.region}}</td>
      </tr>
-     <tr>
-       <th>Income Level</th><td>{{row.incomeLevel.value}}</td>
 
-     </tr>
     <tr>
       <th>Capital City</th>
-      <td id ="capitalCity">{{row.capitalCity}}</td>
+      <td id ="capitalCity">{{country.capitalCity}}</td>
       </tr>
-      <tr>
-        <th>Longitude</th><td id="longitude" value="{{row.longitude}}">{{row.longitude}}</td>
-        </tr>
-        <tr>
-          <th>Latitude</th>
-          <td id="latitude" value="{{row.latitude}}">{{row.latitude}}</td>
-        </tr>
+
 
         {%for i in country_population.1 %}
         <tr>
@@ -53,20 +50,43 @@
       </tr>
         {%endfor%}
 
-      {% endfor %}
+
 
 
   </table>
 </div>
 </div>
 
-<div class="row">
-  <div id="map" style="width: 400px; height: 400px;"></div>
+<!--Map and Flag  --->
 
-<div>
+<div class="row">
+  <table class="countrymap">
+    <tr>
+
+
+  <th>
+  <div id="map" style="width: 400px; height: 400px;" class="countryimage" ></div>
+
+</th>
+<th>
+<div id="flag"style="width: 400px; height: 400px;"class="countryimage">
+  <img src="http://www.geonames.org/flags/x/{{country.flag}}.gif" style="width: 400px; height: 300px;">
+
+</div>
+</th>
+</tr>
+</table>
+</div>
+
+<!--Travel Advice --->
+<div class="row">
+
+
+<caption> Travel Advice</caption>  <br>
 {% if travel_advice.score >  4.5 and travel_advice.score <= 5 %}
 
   <div class="alert alert-primary" role="alert">
+
     <span>Score :</span> {{travel_advice.score}}
     <br>
     <span>Updated :</span> {{travel_advice.updated}}
@@ -75,12 +95,13 @@
   <br>
       <p>Extreme Warning (index value: 4.5 - 5)</p>
 
-      <p>You should avoid any trips. <br>A high warning index is a sound indicator of potential harm to your health and well-being.</p>
+      <p>You should avoid any trips. A high warning index is a sound indicator of potential harm to your health and well-being.</p>
 </div>
 
 {% endif %}
 {% if travel_advice.score >  3.5 and travel_advice.score <= 4.5 %}
 <div class="alert alert-primary" role="alert">
+
   <span>Score :</span> {{travel_advice.score}}
   <br>
   <span>Updated :</span> {{travel_advice.updated}}
@@ -96,6 +117,7 @@
 
 {% if travel_advice.score >  2.5 and travel_advice.score <= 3.5 %}
 <div class="alert alert-primary" role="alert">
+
   <span>Score :</span> {{travel_advice.score}}
   <br>
   <span>Updated :</span> {{travel_advice.updated}}
@@ -104,13 +126,14 @@
 <br>
     <p>Medium Risk (index value: 2.5 - 3.5)</p>
 
-    <p>Warnings often relate to specific regions within a country.<br> However, high attention is still advised when moving around.</p>
+    <p>Warnings often relate to specific regions within a country. However, high attention is still advised when moving around.</p>
 </div>
 
 {% endif %}
 
 {% if travel_advice.score >  0 and travel_advice.score <= 2.5 %}
 <div class="alert alert-primary" role="alert">
+
   <span>Score :</span> {{travel_advice.score}}
   <br>
   <span>Updated :</span> {{travel_advice.updated}}
@@ -119,25 +142,24 @@
 <br>
     <p>Low Risk (index value: 0 - 2.5)</p>
 
-    <p>Usually this is an indicator that travelling in this country is relatively safe.<br> Higher attention is advised with values > 1.</p>
+    <p>Usually this is an indicator that travelling in this country is relatively safe. Higher attention is advised with values > 1.</p>
 </div>
 
 {% endif %}
 </div>
-</div>
+
+<br>
+<br>
+<!--Country News --->
+
 <div class="row">
-  <caption>{{country_news.country}} NEWS</caption>
+<caption>{{country_news.country}} NEWS</caption>
 <div id ="News">
-  <br>
 
-
-
-{% for row in country_news.articles %}
-<br>
-<br>
 
 <table>
 
+{% for row in country_news.articles %}
   <tr>
     <th><a href="{{row.url}}"><span>{{row.title}}</span></a></th>
     <td>"{{row.publishedAt}}"</td>
@@ -149,22 +171,62 @@
 
 
 
-
+{% endfor %}
 
 </table>
 
-{% endfor %}
 
 
+
+</div>
+</div>
+
+<br>
+<br>
+  <!-- Trigger the modal with a button -->
+<div class="row">
+
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"> Search For Country Attraction</button>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Enter City & Radius</h4>
+      </div>
+        <form class='formcontain'action="{% url 'attraction' %}" method="POST">
+            {% csrf_token %}
+      <div class="modal-body">
+
+
+                          <input type="text" name="city" value="city">
+                          <input type="text" name="radius" value="radius">
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-default">Search</button>
+      </div>
+          </form>
+    </div>
+
+  </div>
 </div>
 
 
 
+<!--Map Script--->
+
 <script>
 
 
-  var longi=document.getElementById('longitude').innerText;
-   var latitude=document.getElementById('latitude').innerText;
+  //var longi=document.getElementById('longitude').innerText;
+  var longi={{country.longitude}}
+   var latitude={{country.latitude}};
    let capitalCity= document.getElementById('capitalCity').innerText
   console.log(longi)
   var mymap = L.map('map').setView([latitude,longi], 3);
@@ -199,5 +261,7 @@
 
 
 </script>
+
+
+
     {% endblock %}
-</div>
