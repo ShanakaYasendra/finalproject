@@ -80,3 +80,39 @@ $.ajax({
          }
 
 )}
+
+
+function showDetails(xid){
+ console.log(xid);
+  $.ajax({
+
+    url:'/attDeatils/'+xid,
+     dataType: 'json',
+    success : function(data) {
+               console.log('request Success')
+               //var img={{data.attraction.image}};
+               onShowPOI(data);
+           }
+
+  })
+}
+
+function onShowPOI(data) {
+      let poi = document.getElementById("poi");
+      poi.innerHTML = "";
+      //let image= document.createElement('img');
+      //image.setAttribute("src",data.image);
+      //image.setAttribute("width",'300px');
+      //image.setAttribute("hight",'300px');
+      //poi.appendChild(image);
+      if (data.preview) {
+        poi.innerHTML += `<img src="${data.preview.source}">`;
+      }
+      poi.innerHTML += data.wikipedia_extracts
+        ? data.wikipedia_extracts.html
+        : data.info
+       ? data.info.descr
+        : "No description";
+
+      //poi.innerHTML += `<p><a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p>`;
+    }

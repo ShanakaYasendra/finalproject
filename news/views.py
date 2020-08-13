@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.db.models import Q
+from django.http import JsonResponse
 import requests
 import csv,io
 
@@ -186,7 +187,7 @@ def searchforAttraction(request):
         attaction_url='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1&limit=5&offset=0&lon={}&lat={}&rate=2&format=json'
         attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius={}000&offset=0&lon={}&lat={}&rate=2'
         attaction_res=requests.get(attaction_res.format(radius,longitude,latitude)).json()
-        print(attaction_res)
+        #print(attaction_res)
         context={
         'attraction':attaction_res
         }
@@ -194,21 +195,21 @@ def searchforAttraction(request):
     return render(request,'location.html',context)
 def attDeatils(request,xid):
 
-    attraction_url='https://api.opentripmap.com/0.1/en/places/xid/N3163979473?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&format=json'
-    attraction_res=requests.get(attraction_url.format()).json()
+    attraction_url='https://api.opentripmap.com/0.1/en/places/xid/{}?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&format=json'
+    attraction_res=requests.get(attraction_url.format(xid)).json()
 
-    image=attraction_res['image']
-    text= attraction_res['wikipedia_extracts']['text']
-    name= attraction_res['wikipedia_extracts']['title']
+    image=attraction_res['preview']
+    text= attraction_res['wikipedia_extracts']
+    #name= attraction_res['wikipedia_extracts']
 
-    print(text)
+    print(attraction_res)
     attraction={
-    'image':image,
-    'text':text,
-    'name':name
+    'preview':image,
+    'wikipedia_extracts':text,
+    #'name':name
     }
 
     context={
     'attraction':attraction
     }
-    return redirect(context)
+    return JsonResponse(attraction)

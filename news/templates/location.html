@@ -15,13 +15,14 @@
 <div class="list-group" id= "list">
 
 
-    <a href="{% url 'attDeatils' i.properties.xid %}" class="list-group-item list-group-item-action active" data-id={{i.properties.xid}}>
+    <a href="#"  onclick="showDetails('{{i.properties.xid}}');" class="list-group-item list-group-item-action" data-id={{i.properties.xid}}>
   <h5 class="list-group-item-heading">{{i.properties.name}}</h5>
   <p class="list-group-item-text"></p>
     </a>
 
 </div>
   {% endfor %}
+  </div>
 <div class="col-12 col-lg-7">
   <div class="alert" id='poi'>
     <h3>{{attraction.name}}</h3>
