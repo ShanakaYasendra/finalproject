@@ -10,22 +10,32 @@
 <div class="row">
   <div class="col-12 col-lg-5">
 
-  attention
+<div class="count">
+  {{count.count}}
+
+</div>
+<div id="listdata">
   {% for i in attraction.features %}
 <div class="list-group" id= "list">
 
 
     <a href="#"  onclick="showDetails('{{i.properties.xid}}');" class="list-group-item list-group-item-action" data-id={{i.properties.xid}}>
   <h5 class="list-group-item-heading">{{i.properties.name}}</h5>
-  <p class="list-group-item-text"></p>
+  <p class="list-group-item-text">{{i.properties.kinds}}</p>
     </a>
 
 </div>
   {% endfor %}
   </div>
+  {% if count.count > 5 %}
+            <nav class="text-center">
+                  <button id="next_button" type="button" class="btn btn-primary" onclick="loadlist()">Next (5 of {{count.count}})</button>
+              </nav>
+  {% endif %}
+  </div>
 <div class="col-12 col-lg-7">
   <div class="alert" id='poi'>
-    <h3>{{attraction.name}}</h3>
+
 
   </div>
 

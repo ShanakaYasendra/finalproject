@@ -85,7 +85,7 @@
 <caption> Travel Advice</caption>  <br>
 {% if travel_advice.score >  4.5 and travel_advice.score <= 5 %}
 
-  <div class="alert alert-primary" role="alert">
+  <div class="alert alert-danger" role="alert">
 
     <span>Score :</span> {{travel_advice.score}}
     <br>
@@ -100,7 +100,7 @@
 
 {% endif %}
 {% if travel_advice.score >  3.5 and travel_advice.score <= 4.5 %}
-<div class="alert alert-primary" role="alert">
+<div class="alert alert-warning" role="alert">
 
   <span>Score :</span> {{travel_advice.score}}
   <br>
@@ -116,7 +116,7 @@
 {% endif %}
 
 {% if travel_advice.score >  2.5 and travel_advice.score <= 3.5 %}
-<div class="alert alert-primary" role="alert">
+<div class="alert alert-info" role="alert">
 
   <span>Score :</span> {{travel_advice.score}}
   <br>
@@ -132,7 +132,7 @@
 {% endif %}
 
 {% if travel_advice.score >  0 and travel_advice.score <= 2.5 %}
-<div class="alert alert-primary" role="alert">
+<div class="alert alert-success" role="alert">
 
   <span>Score :</span> {{travel_advice.score}}
   <br>
@@ -153,6 +153,7 @@
 <!--Country News --->
 
 <div class="row">
+  {% if country_news.total > 0 %}
 <caption>{{country_news.country}} NEWS</caption>
 <div id ="News">
 
@@ -179,6 +180,7 @@
 
 
 </div>
+{% endif %}
 </div>
 
 <br>
@@ -204,7 +206,14 @@
       <div class="modal-body">
 
 
-                          <input type="text" name="city" value="city">
+                          <input type="text" name="city" value="city" list="json-datalist">
+                          <datalist id="json-datalist">
+
+
+                          {% for i in city%}
+                          <option value="{{i.city}}">{{i.city}}</option>
+                          {% endfor%}
+                          </datalist>
                           <input type="text" name="radius" value="radius">
 
       </div>

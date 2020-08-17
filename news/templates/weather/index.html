@@ -16,17 +16,37 @@
 
 
         </div>
-          <span style='font-size:100px;'>&#8451;</span>
+
+   {% if messages %}
+       <div class="form-group">
+
+      <label class="error-messages" > {{ messages }}</label>
+
+
+</div>
+   {% endif %}
+
   <div class="form-row align-items-center">
+
+
     <div class="col-auto">
 
-      <input type="text" name="searchVal" class="form-control mb-2" id="searchVal" placeholder="Enter Country to Search" size="80">
+      <input type="text" name="searchVal" id="searchVal" list="json-datalist"  class="form-control mb-2" placeholder="Enter Country to Search" size="80">
+      <datalist id="json-datalist">
+
+
+      {% for i in county_all%}
+      <option value="{{i.name}}">{{i.iso2Code}}</option>
+      {% endfor%}
+      </datalist>
+
     </div>
 
 
     <div class="col-auto">
       <button type="submit" class="btn btn-primary mb-2">Submit</button>
     </div>
+
   </div>
 </form>
 

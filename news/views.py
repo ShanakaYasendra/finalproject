@@ -9,10 +9,25 @@ import csv,io
 from .models import Country,CountryDetails,CountryCity
 
 # Create your views here.
-
+news_api_key='391409f008894221b310aec8d3d276d5'
+opentripmap_api_key='5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be'
+offset=0
+radius=0
+city_lon= ''
+city_lat=''
 
 def index(request):
-    return render(request,"weather/index.html")
+    try:
+        county_all= Country.objects.all()
+        context={
+        'county_all':county_all}
+    except Exception as e:
+
+        context ={
+        'county_all':'Can not find the Country'
+        }
+    return render(request,"weather/index.html",context)
+
 def process_loc(request):
     lat = float(request.GET.get('lat'))
     lon = float(request.GET.get('lon'))
@@ -39,15 +54,23 @@ def searchData(request):
     if request.method =='POST':
         try :
             searchVal = request.POST["searchVal"]
-            searchVal=searchVal.upper()
-            country_Q= Country.objects.get(Q(name=searchVal.capitalize())|Q(countryId=searchVal.upper())|Q(iso2Code=searchVal.upper()))
+
+            print(searchVal)
+            country_Q= Country.objects.get(name=searchVal)
             #country_filter =Country.objects.filter(name=searchVal.capitalize())| Country.objects.filter(countryId=searchVal.upper())
             #print(country_list.name)
 
             countryDetails_q= CountryDetails.objects.get(countryId=country_Q.countryId)
-            print(countryDetails_q.longitude)
+            countryCity_q= CountryCity.objects.filter(countryName=searchVal)
+            print(countryCity_q)
         except Exception as e:
             print(e)
+            county_all= Country.objects.all()
+            context={
+            "county_all": county_all,
+            "messages":"Can Not Find The Country"
+            }
+            return render(request,"weather/index.html",context)
     country=country_Q.iso2Code
     print(country)
 
@@ -59,11 +82,12 @@ def searchData(request):
 
     con_pop_res= requests.get(con_pop_url.format(country)).json()
     #print(con_pop_res)
-    news_url='https://newsapi.org/v2/top-headlines?country={}&apiKey=391409f008894221b310aec8d3d276d5'
+    news_url='https://newsapi.org/v2/top-headlines?country={}&apiKey={}'
     #'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=391409f008894221b310aec8d3d276d5'
     #https://newsapi.org/v2/top-headlines?country=us&apiKey=391409f008894221b310aec8d3d276d5
-    news_response=requests.get(news_url.format(country)).json()
+    news_response=requests.get(news_url.format(country,news_api_key)).json()
     #print(news_response)
+
 
     travel_url='https://www.travel-advisory.info/api?countrycode={}?format=json'
     travel_res=requests.get(travel_url.format(country)).json()
@@ -108,7 +132,8 @@ def searchData(request):
         'country_news':country_news,
         'country_population': con_pop_res,
         'country': country_de,
-        'travel_advice':country_travel_advice
+        'travel_advice':country_travel_advice,
+        'city':countryCity_q
 
     }
 
@@ -166,43 +191,70 @@ def contact_upload(request):
     return render(request, template, context)
 
 def searchforAttraction(request):
+    global offset
+    global radius
+    global city_lat
+    global city_lon
     print('hello')
+
     if request.method =='POST':
 
         location=request.POST['city']
         radius=request.POST['radius']
         #location='colombo'
-        print(location)
-        location_url="https://api.opentripmap.com/0.1/en/places/geoname?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&name={}&format=json"
+        #print(location)
+        location_url="https://api.opentripmap.com/0.1/en/places/geoname?apikey={}&name={}&format=json"
 
 
-        location_res=requests.get(location_url.format(location)).json()
-        print(location_res['lat'])
-        print(location_res['lon'])
-        longitude=location_res['lon']
-        latitude=location_res['lat']
+        location_res=requests.get(location_url.format(opentripmap_api_key,location)).json()
+        #print(location_res['lat'])
+        #print(location_res['lon'])
+        city_lon=location_res['lon']
+        city_lat=location_res['lat']
 
-    #https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1000&limit=5&offset=0&lon=79.84868&lat=6.93548&rate=2&format=count
-
+        count_url='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset=0&lon={}&lat={}&rate=2&format=count&format=json'
+        count_res=requests.get(count_url.format(opentripmap_api_key,radius,city_lon,city_lat)).json()
+        #'https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius={}000&limit=5&offset=0&lon=79.84868&lat=6.93548&rate=2&format=count'
+        #print(count_res)
         attaction_url='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1&limit=5&offset=0&lon={}&lat={}&rate=2&format=json'
-        attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius={}000&offset=0&lon={}&lat={}&rate=2'
-        attaction_res=requests.get(attaction_res.format(radius,longitude,latitude)).json()
-        #print(attaction_res)
+        attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
+        attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
+        print(attaction_res)
+        offset=0
         context={
-        'attraction':attaction_res
+        'attraction':attaction_res,
+        'count':count_res
         }
 
     return render(request,'location.html',context)
+
+
+def loadtheList(request):
+        global offset
+        global radius
+        global city_lat
+        global city_lon
+        offset+=5;
+        print(city_lat)
+        print(city_lon)
+        attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
+        attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
+        context={
+        'attraction':attaction_res,
+        }
+        print(attaction_res)
+        return JsonResponse(attaction_res)
+
 def attDeatils(request,xid):
 
-    attraction_url='https://api.opentripmap.com/0.1/en/places/xid/{}?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&format=json'
-    attraction_res=requests.get(attraction_url.format(xid)).json()
+    attraction_url='https://api.opentripmap.com/0.1/en/places/xid/{}?apikey={}&format=json'
+    attraction_res=requests.get(attraction_url.format(xid,opentripmap_api_key)).json()
 
     image=attraction_res['preview']
     text= attraction_res['wikipedia_extracts']
     #name= attraction_res['wikipedia_extracts']
 
-    print(attraction_res)
+    #print(attraction_res)
     attraction={
     'preview':image,
     'wikipedia_extracts':text,
@@ -213,3 +265,6 @@ def attDeatils(request,xid):
     'attraction':attraction
     }
     return JsonResponse(attraction)
+def getGeoname(geodata):
+
+    return geoType,catagory

@@ -1,5 +1,5 @@
 
-
+let offset=0;
 function onloadfun(){
   getLocation();
   startTime();
@@ -60,10 +60,11 @@ $.ajax({
 
           let mainpageDiv=document.getElementById('weather');
           let ptag= document.createElement('p');
-          //var celcius= &#8451;
-          ptag.innerHTML+=data.main.temp;
+          var celcius=Math.round(data.main.temp);
+          ptag.innerHTML+=celcius+'&#8451;';
           if( typeof(mainpageDiv) !='undefined' && mainpageDiv != null)
           {
+              //ptag.innerHTML+=data.main.temp+'&#8451;';
               mainpageDiv.appendChild(img);
               mainpageDiv.appendChild(ptag);
           }
@@ -100,11 +101,6 @@ function showDetails(xid){
 function onShowPOI(data) {
       let poi = document.getElementById("poi");
       poi.innerHTML = "";
-      //let image= document.createElement('img');
-      //image.setAttribute("src",data.image);
-      //image.setAttribute("width",'300px');
-      //image.setAttribute("hight",'300px');
-      //poi.appendChild(image);
       if (data.preview) {
         poi.innerHTML += `<img src="${data.preview.source}">`;
       }
@@ -116,3 +112,46 @@ function onShowPOI(data) {
 
       //poi.innerHTML += `<p><a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p>`;
     }
+  function loadlist(){
+
+    $.ajax({
+
+      url:'/listload',
+       dataType: 'json',
+      success : function(data) {
+                 console.log('request Success');
+                 redrawtheList(data)
+                 //var img={{data.attraction.image}};
+                 //onShowPOI(data);
+             }
+
+    })
+}
+function redrawtheList(data){
+  let listdata=document.getElementById('listdata');
+  listdata.innerHTML="";
+  let list = document.createElement("div");
+      list.setAttribute("id","list")
+       list.innerHTML = "";
+       console.log('hi')
+
+       data.features.forEach(item => list.appendChild(createListItem(item)));
+       listdata.appendChild(list);
+     }
+function createListItem(item) {
+         let a = document.createElement("a");
+         a.className = "list-group-item list-group-item-action";
+         a.setAttribute("data-id", item.properties.xid);
+         a.innerHTML = `<h5 class="list-group-item-heading">${item.properties.name}</h5>
+                   <p class="list-group-item-text">${item.properties.kinds}</p>`;
+
+         a.addEventListener("click", function() {
+           document.querySelectorAll("#list a").forEach(function(item) {
+             item.classList.remove("active");
+           });
+           this.classList.add("active");
+           let xid = this.getAttribute("data-id");
+           showDetails(xid).then(data => onShowPOI(data));
+         });
+         return a;
+       }
