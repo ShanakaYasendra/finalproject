@@ -20,10 +20,10 @@ function startTime() {
     var t = setTimeout(startTime, 500);
   }
   function checkTime(i) {
-    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    if (i < 10) {i = "0" + i};
     return i;
   }
-  //var x = document.getElementById("demo");
+
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -41,36 +41,40 @@ console.log(Latitude);
 var Longitude= position.coords.longitude;
 spanlo.setAttribute("Longitude",Longitude);
 console.log("la is" +Longitude);
-
+data={
+  'Longitude':Longitude,
+  'Latitude':Latitude
+}
 $.ajax({
-            type: "GET",
-            url: 'https://api.openweathermap.org/data/2.5/weather?lat='+Latitude+'&lon='+Longitude+'&&units=metric&appid=28719ed44bffb67e022e502067349ca0',
+            'type': "GET",
 
-            //contentType: "application/json",
-        dataType: 'json',
+            'url': '/weather',
+            'data':data,
+
 
             success : function(data) {
           console.log(data);
 
             var img=   document.createElement('img')
-            var src=data.weather[0].icon;
+            var src=data.icon;
             img.setAttribute("src","https://openweathermap.org/img/w/"+src+".png")
             var imgLoc= document.getElementById('image');
 
 
           let mainpageDiv=document.getElementById('weather');
           let ptag= document.createElement('p');
-          var celcius=Math.round(data.main.temp);
+          var celcius=Math.round(data.temperature);
           ptag.innerHTML+=celcius+'&#8451;';
+
           if( typeof(mainpageDiv) !='undefined' && mainpageDiv != null)
           {
-              //ptag.innerHTML+=data.main.temp+'&#8451;';
+              ptag.innerHTML+='<br>'+data.description.toUpperCase();
               mainpageDiv.appendChild(img);
               mainpageDiv.appendChild(ptag);
           }
           else {
                 imgLoc.appendChild(img)
-                 document.getElementById('getLocation').innerHTML+=data.main.temp;
+                 document.getElementById('getLocation').innerHTML+=data.temperature;
           }
 
 
@@ -113,7 +117,8 @@ function onShowPOI(data) {
       //poi.innerHTML += `<p><a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p>`;
     }
   function loadlist(){
-
+    let poi = document.getElementById("poi");
+    poi.innerHTML = "";
     $.ajax({
 
       url:'/listload',
@@ -143,7 +148,7 @@ function createListItem(item) {
          a.className = "list-group-item list-group-item-action";
          a.setAttribute("data-id", item.properties.xid);
          a.innerHTML = `<h5 class="list-group-item-heading">${item.properties.name}</h5>
-                   <p class="list-group-item-text">${item.properties.kinds}</p>`;
+                   <p class="list-group-item-text">${getGeoName(item.properties.kinds)}</p>`;
 
          a.addEventListener("click", function() {
            document.querySelectorAll("#list a").forEach(function(item) {
@@ -155,3 +160,85 @@ function createListItem(item) {
          });
          return a;
        }
+function getGeoName(item){
+  if (item.includes('shops,squares,malls')){
+    return 'Shops,Squares,Malls'
+  }
+  else if (item.includes('shops,malls,tourist_facilities')) {
+    return 'Shops,Malls,Tourist facilities'
+
+  }
+  else if (item.includes('bridges,architecture,interesting_places,other_bridges')) {
+    return 'Bridges,Architecture'
+
+  }
+
+else if (item.includes('towers,architecture,interesting_places,other_towers')) {
+
+  return 'Towers,Architecture'
+}
+else if (item.includes('museums')) {
+
+  return 'Museums,Cultural'
+}
+else if (item.includes('skyscrapers,architecture,interesting_places')) {
+
+  return 'Skyscrapers,Architecture'
+}
+else if ((item.includes('religion,other_temples'))||(item.includes('religion,buddhist_temples')) ){
+  return 'Religion,Buddhist Temple'
+
+}
+else if (item.includes('religion,churches')) {
+  return 'Religion,Churches'
+
+}
+else if (item.includes('religion,mosques')) {
+  return 'Religion,Mosque'
+
+}
+else if (item.includes('religion,hindu_temples')) {
+  return 'Religion,Temple'
+
+}
+else if (item.includes('other,unclassified_objects,interesting_places,tourist_object')) {
+  return'Other,Tourist'
+
+}
+else if (item.includes('lighthouses,architecture,interesting_places')) {
+  return 'Lighthouses'
+
+}
+else if (item.includes('view_points,other,interesting_places')) {
+  return 'Other'
+}
+else if (item.includes('cinemas')) {
+  return'Cinemas'
+
+}
+else if (item.includes('hotels')) {
+  return'Hotel'
+
+}
+else if (item.includes('banks')) {
+  return'Banks'
+
+}
+else if (item.includes('zoos')) {
+  return 'Zoo'
+}
+else if (item.includes('historic,monuments_and_memorials')) {
+  return'Historic,Monuments and Memorials'
+
+}
+else if (item.includes('other_theatres')) {
+  return'Theatres'
+
+}
+else if (item.includes('gardens_and_parks')) {
+  return 'Gardens and Parks'
+}
+else{
+  return 'interesting places'
+}
+}

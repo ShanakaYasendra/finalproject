@@ -4,11 +4,13 @@ from django.db.models import Q
 from django.http import JsonResponse
 import requests
 import csv,io
+import json
 
 
 from .models import Country,CountryDetails,CountryCity
 
 # Create your views here.
+wetherApi='28719ed44bffb67e022e502067349ca0'
 news_api_key='391409f008894221b310aec8d3d276d5'
 opentripmap_api_key='5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be'
 offset=0
@@ -28,41 +30,28 @@ def index(request):
         }
     return render(request,"weather/index.html",context)
 
-def process_loc(request):
-    lat = float(request.GET.get('lat'))
-    lon = float(request.GET.get('lon'))
-    #print('lat')
-
-    url='https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&&units=metric&appid=28719ed44bffb67e022e502067349ca0'
-    url='https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=28719ed44bffb67e022e502067349ca0'
-
-    wether_res= requests.get(url.format(lat,lon)).json()
-    #print(wether_res)
+def weather(request):
+    lat = request.GET['Latitude']
+    lon = request.GET['Longitude']
+    url='https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&&units=metric&appid={}'
+    wether_res= requests.get(url.format(lat,lon,wetherApi)).json()
     city_weather={
         'temperature':wether_res['main']['temp'],
         'description':wether_res['weather'][0]['description'],
         'icon':wether_res['weather'][0]['icon'],
     }
-    print(wether_res['main']['temp'])
-    context={
-    'city_weather': city_weather,
-    }
-    return render(request,'weather/index.html',context)
+
+    return JsonResponse(city_weather)
 
 def searchData(request):
 
     if request.method =='POST':
         try :
             searchVal = request.POST["searchVal"]
-
-            print(searchVal)
             country_Q= Country.objects.get(name=searchVal)
-            #country_filter =Country.objects.filter(name=searchVal.capitalize())| Country.objects.filter(countryId=searchVal.upper())
-            #print(country_list.name)
-
             countryDetails_q= CountryDetails.objects.get(countryId=country_Q.countryId)
             countryCity_q= CountryCity.objects.filter(countryName=searchVal)
-            print(countryCity_q)
+            #print(countryCity_q)
         except Exception as e:
             print(e)
             county_all= Country.objects.all()
@@ -72,8 +61,7 @@ def searchData(request):
             }
             return render(request,"weather/index.html",context)
     country=country_Q.iso2Code
-    print(country)
-
+    #print(country)
 
     country_list=' http://api.worldbank.org/v2/country/{}?format=json'
     cr=requests.get(country_list.format(country)).json()
@@ -83,8 +71,6 @@ def searchData(request):
     con_pop_res= requests.get(con_pop_url.format(country)).json()
     #print(con_pop_res)
     news_url='https://newsapi.org/v2/top-headlines?country={}&apiKey={}'
-    #'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=391409f008894221b310aec8d3d276d5'
-    #https://newsapi.org/v2/top-headlines?country=us&apiKey=391409f008894221b310aec8d3d276d5
     news_response=requests.get(news_url.format(country,news_api_key)).json()
     #print(news_response)
 
@@ -104,16 +90,6 @@ def searchData(request):
         'flag':country_Q.iso2Code.lower()
     }
 
-
-
-    #city_weather={
-    #    'city':city,
-    #    'temperature':r['main']['temp'],
-    #    'description':r['weather'][0]['description'],
-    #    'icon':r['weather'][0]['icon'],
-
-
-    #}
     print(travel_res['data'][country]['advisory']['updated'])
     country_travel_advice={
     'score': travel_res['data'][country]['advisory']['score'],
@@ -216,10 +192,13 @@ def searchforAttraction(request):
         count_res=requests.get(count_url.format(opentripmap_api_key,radius,city_lon,city_lat)).json()
         #'https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius={}000&limit=5&offset=0&lon=79.84868&lat=6.93548&rate=2&format=count'
         #print(count_res)
-        attaction_url='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1&limit=5&offset=0&lon={}&lat={}&rate=2&format=json'
+        #attaction_url='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1&limit=5&offset=0&lon={}&lat={}&rate=2&format=json'
         attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
         attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
-        print(attaction_res)
+        #print(attaction_res)
+
+        #geokind=getGeoname(attaction_res['features'][0])
+        #print(geokind)
         offset=0
         context={
         'attraction':attaction_res,
@@ -265,6 +244,3 @@ def attDeatils(request,xid):
     'attraction':attraction
     }
     return JsonResponse(attraction)
-def getGeoname(geodata):
-
-    return geoType,catagory
