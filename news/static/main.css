@@ -18,14 +18,16 @@
 {
   padding: .5rem 1rem;
 }
+#count{
+text-align: center;
+
+}
 #CountryDetails{
 
   width: 100%;
   height: 200px;
 }
-#caption_id{
-  margin-top: 30px;
-}
+
 #country{
 
   width: 100%;
@@ -64,3 +66,10 @@
 .error-messages {
   color: red;
   font-size: 12px; }
+
+
+  @media screen and (min-width: 480px, max-width:800) {
+    body {
+      background-color: lightgreen;
+    }
+  }

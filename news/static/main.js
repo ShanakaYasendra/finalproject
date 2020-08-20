@@ -85,7 +85,20 @@ $.ajax({
          }
 
 )}
+function loadFirstList(){
+  $.ajax({
 
+    url:'/attraction',
+     dataType: 'json',
+    success : function(data) {
+               console.log('request Success');
+               redrawtheList(data)
+               //var img={{data.attraction.image}};
+               //onShowPOI(data);
+           }
+
+  })
+}
 
 function showDetails(xid){
  console.log(xid);
@@ -126,6 +139,8 @@ function onShowPOI(data) {
       success : function(data) {
                  console.log('request Success');
                  redrawtheList(data)
+
+                
                  //var img={{data.attraction.image}};
                  //onShowPOI(data);
              }
@@ -142,6 +157,8 @@ function redrawtheList(data){
 
        data.features.forEach(item => list.appendChild(createListItem(item)));
        listdata.appendChild(list);
+
+
      }
 function createListItem(item) {
          let a = document.createElement("a");
