@@ -171,6 +171,7 @@ def searchforAttraction(request):
     global radius
     global city_lat
     global city_lon
+
     print('hello')
 
     if request.method =='POST':
@@ -195,14 +196,29 @@ def searchforAttraction(request):
         #attaction_url='https://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6463508c4396871f980bf2a996c2306be&radius=1&limit=5&offset=0&lon={}&lat={}&rate=2&format=json'
         attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
         attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
-        #print(attaction_res)
-
+        #print(attaction_res['features'])
+        #jsonObj= json.loads(attaction_res)
         #geokind=getGeoname(attaction_res['features'][0])
         #print(geokind)
+        location_dict={}
+        for key in attaction_res['features']:
+            value=key['properties']['kinds']
+            name=key['properties']['name']
+            #location_dict.append(name)
+            location_dict[key['properties']['name']]=[]
+            message={'kind':getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid']}
+            location_dict[name].append(message)
+
+
+        print(len(location_dict))
         offset=0
+        count=count_res
         context={
-        'attraction':attaction_res,
-        'count':count_res
+        #'attraction':attaction_res,
+        'count':count_res,
+        'location':location_dict,
+        'city':location
+
         }
 
     return render(request,'location.html',context)
@@ -220,6 +236,8 @@ def loadtheList(request):
         attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
         context={
         'attraction':attaction_res,
+        'record':offset,
+
         }
         print(attaction_res)
         return JsonResponse(attaction_res)
@@ -242,5 +260,75 @@ def attDeatils(request,xid):
 
     context={
     'attraction':attraction
+
     }
     return JsonResponse(attraction)
+
+def getKind(data):
+    #print(data)
+    if 'shops,squares,malls' in data:
+          val= 'Shops,Squares,Malls'
+    elif 'shops,malls,tourist_facilities' in data:
+          val= 'Shops,Malls,Tourist facilities'
+    elif 'bridges,architecture,interesting_places,other_bridges' in data:
+          val= 'Bridges,Architecture'
+    elif 'towers,architecture,interesting_places,other_towers'in data:
+         val= 'Towers,Architecture'
+    elif 'museums'in data:
+           val= 'Museums,Cultural'
+
+    elif 'skyscrapers,architecture,interesting_places'in data:
+           val= 'Skyscrapers,Architecture'
+
+    elif 'other_temples'in data:
+           val= 'Religion,Buddhist Temple'
+    elif  'buddhist_temples' in data:
+           val= 'Religion,Buddhist Temple'
+    elif 'churches'in data:
+           val= 'Religion,Churches'
+    elif 'mosques'in data:
+           val= 'Religion,Mosque'
+
+    elif 'hindu_temples'in data:
+           val= 'Religion, Hindu Temple'
+    elif 'other,unclassified_objects,interesting_places,tourist_object'in data:
+           val='Other,Tourist'
+
+
+    elif 'lighthouses,architecture,interesting_places'in data:
+           val='Lighthouses'
+
+
+    elif 'view_points,other,interesting_places'in data:
+           val= 'Other'
+
+    elif 'cinemas'in data:
+           val='Cinemas'
+
+
+    elif 'hotels'in data:
+           val='Hotel'
+
+
+    elif 'banks'in data:
+           val='Banks'
+
+
+    elif 'zoos'in data:
+           val='Zoo'
+
+    elif 'historic,monuments_and_memorials'in data:
+           val='Historic,Monuments and Memorials'
+
+
+    elif 'other_theatres'in data:
+           val='Theatres'
+
+
+    elif 'gardens_and_parks'in data:
+           val= 'Gardens and Parks'
+
+    else:
+           val= 'interesting places'
+    print(val)
+    return val

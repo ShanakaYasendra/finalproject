@@ -170,8 +170,6 @@
       <td><img src= '{{ row.urlToImage }}' style="width: 100px; height: 100px;"></td>
     </tr>
 
-
-
 {% endfor %}
 
 </table>
@@ -198,23 +196,39 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Enter City & Radius</h4>
+          <h4 class="modal-title">Enter City & Radius</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        
       </div>
         <form class='formcontain'action="{% url 'attraction' %}" method="POST">
             {% csrf_token %}
       <div class="modal-body">
+        <table>
+          <tr>
+            <th>  <label for="name">Enter City</label></th>
+            <td>    <input type="text" name="city"  list="json-datalist" placeholder= "Enter City Name">
+                <datalist id="json-datalist">
+                {% for i in city%}
+                <option value="{{i.city}}">{{i.city}}</option>
+                {% endfor%}
+                </datalist>
+              </td>
+              </tr>
+
+              <tr>
+
+              <th>
+                  <label for="radius">Enter Radius </label>
+              </th>
+              <td>
+                <input type="text" name="radius" placeholder="Enter radius in K.M Eg: 1">
+</td>
+          </tr>
+        </table>
 
 
-                          <input type="text" name="city" value="city" list="json-datalist">
-                          <datalist id="json-datalist">
 
 
-                          {% for i in city%}
-                          <option value="{{i.city}}">{{i.city}}</option>
-                          {% endfor%}
-                          </datalist>
-                          <input type="text" name="radius" value="radius">
 
       </div>
       <div class="modal-footer">

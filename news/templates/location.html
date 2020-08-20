@@ -8,23 +8,36 @@
 {% block body%}
 
 <div class="row">
-  <div class="col-12 col-lg-5">
 
-<div class="count">
-  {{count.count}}
+  <div class="col">
+    <!-- heading area --->
+    <div class="heading" id ="count">
+
+<h3>  {{count.count}} Attraction found {{city}}</h3>
 
 </div>
-<div id="listdata">
-  {% for i in attraction.features %}
+  </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-lg-5">
+  <div id="listdata">
+  {% for key, value in location.items %}
+
+
+
+
 <div class="list-group" id= "list">
 
 
-    <a href="#"  onclick="showDetails('{{i.properties.xid}}');" class="list-group-item list-group-item-action" data-id={{i.properties.xid}}>
-  <h5 class="list-group-item-heading">{{i.properties.name}}</h5>
-  <p class="list-group-item-text">{{i.properties.kinds}}</p>
+    <a href="#"  onclick="showDetails('{{value.0.xid}}');" class="list-group-item list-group-item-action" data-id={{value.0.xid}}>
+  <h5 class="list-group-item-heading">{{value.0.name}}</h5>
+  <p class="list-group-item-text">{{value.0.kind}}</p>
     </a>
 
 </div>
+
+
   {% endfor %}
   </div>
   {% if count.count > 5 %}
