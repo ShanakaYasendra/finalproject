@@ -28,7 +28,7 @@ def index(request):
         context ={
         'county_all':'Can not find the Country'
         }
-    return render(request,"weather/index.html",context)
+    return render(request,"Country/index.html",context)
 
 def weather(request):
     lat = request.GET['Latitude']
@@ -59,7 +59,7 @@ def searchData(request):
             "county_all": county_all,
             "messages":"Can Not Find The Country"
             }
-            return render(request,"weather/index.html",context)
+            return render(request,"Country/index.html",context)
     country=country_Q.iso2Code
     #print(country)
 
@@ -113,7 +113,7 @@ def searchData(request):
 
     }
 
-    return render(request,'weather/resultPage.html',context)
+    return render(request,'Country/resultPage.html',context)
 
 def contact_upload(request):
     template='contact_upload.html'
@@ -183,7 +183,7 @@ def searchforAttraction(request):
 
 
         location_res=requests.get(location_url.format(opentripmap_api_key,location)).json()
-        
+
         city_lon=location_res['lon']
         city_lat=location_res['lat']
 
@@ -192,19 +192,19 @@ def searchforAttraction(request):
         attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
         attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
 
-
+        coordinates=[]
         location_dict={}
         for key in attaction_res['features']:
             value=key['properties']['kinds']
             name=key['properties']['name']
-
+            coordinates.append(key["geometry"]['coordinates'])
             #location_dict.append(name)
             location_dict[key['properties']['name']]=[]
-            message={'kind':getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid'],'coordinates':coordinates}
+            message={'kind':getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid']}
             location_dict[name].append(message)
 
 
-        print(len(location_dict))
+        print(coordinates)
         offset=0
         count=count_res
         context={
@@ -213,7 +213,8 @@ def searchforAttraction(request):
         'location':location_dict,
         'city':location,
         'city_lon':city_lon,
-        'city_lat':city_lat
+        'city_lat':city_lat,
+        'coordinates':coordinates
         }
 
     return render(request,'location.html',context)
@@ -229,13 +230,6 @@ def loadtheList(request):
         print(city_lon)
         attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
         attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
-        context={
-        'attraction':attaction_res,
-        'record':offset,
-        'city_lon':city_lon,
-        'city_lat':city_lat
-        }
-        print(attaction_res)
         return JsonResponse(attaction_res)
 
 def attDeatils(request,xid):

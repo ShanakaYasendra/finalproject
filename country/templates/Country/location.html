@@ -65,17 +65,25 @@ City Attraction
 <script type="text/javascript">
   var city_lon={{city_lon}}
   var city_lat={{city_lat}}
+  var locArray={{coordinates}}
   mymap = L.map( 'poi', {
     center: [20.0, 5.0],
     minZoom: 2,
     zoom: 2
-  }).setView([city_lat, city_lon], 12);
+  }).setView([city_lat, city_lon], 15);
 
    L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    subdomains: ['a', 'b', 'c']
-  }).addTo( mymap )
-   L.marker([city_lat, city_lon]).addTo(mymap);
+
+  }).addTo( mymap );
+
+  for (var i = 0; i < locArray.length; i++) {
+      let a=locArray[i][0];
+      let b= locArray[i][1];
+            L.marker([b,a])
+            .bindPopup("hi")
+                .addTo(mymap);
+        }
 
 
 </script>

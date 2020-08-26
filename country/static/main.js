@@ -5,7 +5,7 @@ function onloadfun(){
   startTime();
 }
 
-
+///Set the local time
 function startTime() {
     var today = new Date();
     var h = today.getHours();
@@ -19,11 +19,12 @@ function startTime() {
 
     var t = setTimeout(startTime, 500);
   }
-  function checkTime(i) {
+
+function checkTime(i) {
     if (i < 10) {i = "0" + i};
     return i;
   }
-
+///Return local Location for Wether
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -32,6 +33,7 @@ function getLocation() {
   }
 }
 
+///Setting the Local weather for index page and Navigation Bar
 function showPosition(position) {
   var spanlo= document.getElementById('getLocation');
   var Latitude= position.coords.latitude ;
@@ -53,7 +55,7 @@ $.ajax({
 
 
             success : function(data) {
-          console.log(data);
+        //  console.log(data);
 
             var img=   document.createElement('img')
             var src=data.icon;
@@ -85,21 +87,24 @@ $.ajax({
          }
 
 )}
+
+///Draw the first list of the attraction
 function loadFirstList(){
   $.ajax({
 
     url:'/attraction',
      dataType: 'json',
     success : function(data) {
-               console.log('request Success');
+               //console.log('request Success');
                redrawtheList(data)
-               //var img={{data.attraction.image}};
-               //onShowPOI(data);
+
            }
 
   })
 }
 
+/// Setting the Attraction Details in the POI div area
+///request the API called to VIEW
 function showDetails(xid){
  console.log(xid);
   $.ajax({
@@ -107,13 +112,13 @@ function showDetails(xid){
     url:'/attDeatils/'+xid,
      dataType: 'json',
     success : function(data) {
-               console.log('request Success')
-               //var img={{data.attraction.image}};
                onShowPOI(data);
            }
 
   })
 }
+
+///Setting the respose data from VIew and load on the page without refresh
 
 function onShowPOI(data) {
       let poi = document.getElementById("poi");
@@ -126,10 +131,11 @@ function onShowPOI(data) {
         : data.info
        ? data.info.descr
         : "No description";
+  }
 
-      //poi.innerHTML += `<p><a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p>`;
-    }
-  function loadlist(){
+/// Clear the POI div data and request the newxt 5 Items for the list
+///called by next button
+function loadlist(){
     let poi = document.getElementById("poi");
     poi.innerHTML = "";
     $.ajax({
@@ -147,6 +153,8 @@ function onShowPOI(data) {
 
     })
 }
+
+///Load the data for the next page list items
 function redrawtheList(data){
   let listdata=document.getElementById('listdata');
   listdata.innerHTML="";
@@ -178,6 +186,7 @@ function createListItem(item) {
          return a;
        }
 
+/// Draw the Map and mark the attarction on the next page list
   function drawMap(item)
   {
     mymap.remove();
@@ -185,14 +194,24 @@ function createListItem(item) {
       center: [20.0, 5.0],
       minZoom: 2,
       zoom: 2
-    }).setView([city_lat, city_lon], 12);
+    }).setView([city_lat, city_lon], 15);
 
      L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      subdomains: ['a', 'b', 'c']
+
     }).addTo( mymap )
-     L.marker([city_lat, city_lon]).addTo(mymap);
+
+    for (var i = 0; i < item.features.length; i++) {
+        let a=item.features[i].geometry.coordinates[0];
+        let b= item.features[i].geometry.coordinates[1];
+              L.marker([b,a])
+              .bindPopup(item.features[i].properties.name)
+                  .addTo(mymap);
+          }
+     //L.marker([city_lat, city_lon]).addTo(mymap);
   }
+
+/// Return the Attraction Kind
 function getGeoName(item){
   if (item.includes('shops,squares,malls')){
     return 'Shops,Squares,Malls'
@@ -272,6 +291,6 @@ else if (item.includes('gardens_and_parks')) {
   return 'Gardens and Parks'
 }
 else{
-  return 'interesting places'
+  return 'Interesting places'
 }
 }
