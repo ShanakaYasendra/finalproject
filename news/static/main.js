@@ -138,9 +138,9 @@ function onShowPOI(data) {
        dataType: 'json',
       success : function(data) {
                  console.log('request Success');
-                 redrawtheList(data)
+                 redrawtheList(data);
+                 drawMap(data);
 
-                
                  //var img={{data.attraction.image}};
                  //onShowPOI(data);
              }
@@ -153,7 +153,7 @@ function redrawtheList(data){
   let list = document.createElement("div");
       list.setAttribute("id","list")
        list.innerHTML = "";
-       console.log('hi')
+
 
        data.features.forEach(item => list.appendChild(createListItem(item)));
        listdata.appendChild(list);
@@ -177,6 +177,22 @@ function createListItem(item) {
          });
          return a;
        }
+
+  function drawMap(item)
+  {
+    mymap.remove();
+    mymap = L.map( 'poi', {
+      center: [20.0, 5.0],
+      minZoom: 2,
+      zoom: 2
+    }).setView([city_lat, city_lon], 12);
+
+     L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      subdomains: ['a', 'b', 'c']
+    }).addTo( mymap )
+     L.marker([city_lat, city_lon]).addTo(mymap);
+  }
 function getGeoName(item){
   if (item.includes('shops,squares,malls')){
     return 'Shops,Squares,Malls'
