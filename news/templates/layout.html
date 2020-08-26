@@ -29,7 +29,10 @@ crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
 integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
 crossorigin=""></script>
-      <title></title>
+      <title>
+{% block title %}
+{% endblock %}
+      </title>
 
   </head>
   <body onload="onloadfun()">
@@ -75,7 +78,7 @@ crossorigin=""></script>
                             <li class="nav-item active">
                               <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
                             </li>
-                          
+
                             <li class="nav-item">
                               <div class="widget">
                                 <div id="clock"></div>

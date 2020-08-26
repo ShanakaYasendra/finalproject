@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 
 {% block head %}
-
+Home
+{% block title %}
+Country Details
+{% endblock%}
 
 
 {% endblock %}
@@ -198,7 +201,7 @@
       <div class="modal-header">
           <h4 class="modal-title">Enter City & Radius</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-        
+
       </div>
         <form class='formcontain'action="{% url 'attraction' %}" method="POST">
             {% csrf_token %}
@@ -206,7 +209,7 @@
         <table>
           <tr>
             <th>  <label for="name">Enter City</label></th>
-            <td>    <input type="text" name="city"  list="json-datalist" placeholder= "Enter City Name">
+            <td>    <input type="text" name="city"  list="json-datalist" placeholder= "Enter City Name" required>
                 <datalist id="json-datalist">
                 {% for i in city%}
                 <option value="{{i.city}}">{{i.city}}</option>
@@ -221,7 +224,7 @@
                   <label for="radius">Enter Radius </label>
               </th>
               <td>
-                <input type="text" name="radius" placeholder="Enter radius in K.M Eg: 1">
+                <input type="number" name="radius" placeholder="Enter radius in K.M Eg: 1"  min=1 max=50 required>
 </td>
           </tr>
         </table>
@@ -251,8 +254,8 @@
   var longi={{country.longitude}}
    var latitude={{country.latitude}};
    let capitalCity= document.getElementById('capitalCity').innerText
-  console.log(longi)
-  var mymap = L.map('map').setView([latitude,longi], 3);
+
+  var mymap = L.map('map').setView([latitude,longi], 6);
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
@@ -265,21 +268,6 @@
 
   L.marker([latitude,longi]).addTo(mymap)
     .bindPopup(capitalCity).openPopup();
-
-  L.circle([51.508, -0.11], 500, {
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5
-  }).addTo(mymap).bindPopup("I am a circle.");
-
-  L.polygon([
-    [51.509, -0.08],
-    [51.503, -0.06],
-    [51.51, -0.047]
-  ]).addTo(mymap).bindPopup("I am a polygon.");
-
-
-  var popup = L.popup();
 
 
 

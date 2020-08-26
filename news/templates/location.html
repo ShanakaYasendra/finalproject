@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
-
+{% block title %}
+City Attraction
+{% endblock%}
 {% block head %}
 
 
@@ -47,6 +49,9 @@
   {% endif %}
   </div>
 <div class="col-12 col-lg-7">
+
+
+
   <div class="alert" id='poi'>
 
 
@@ -56,6 +61,27 @@
   </div>
 
 </div>
+
+<script type="text/javascript">
+  var city_lon={{city_lon}}
+  var city_lat={{city_lat}}
+  mymap = L.map( 'poi', {
+    center: [20.0, 5.0],
+    minZoom: 2,
+    zoom: 2
+  }).setView([city_lat, city_lon], 12);
+
+   L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    subdomains: ['a', 'b', 'c']
+  }).addTo( mymap )
+   L.marker([city_lat, city_lon]).addTo(mymap);
+
+
+</script>
+
+
+
 
 
 
