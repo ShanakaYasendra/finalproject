@@ -8,7 +8,7 @@ import json
 
 
 from .models import Country,CountryDetails,CountryCity
-
+from . import uploadutils
 # Create your views here.
 wetherApi='28719ed44bffb67e022e502067349ca0'
 news_api_key='391409f008894221b310aec8d3d276d5'
@@ -117,55 +117,53 @@ def searchData(request):
 
 def contact_upload(request):
     template='contact_upload.html'
-
     prompt={
-        'order':'order shouldbe'
+        'order':'Please Select the Upload'
     }
-    if request.method == "GET":
-        return render(request, template,prompt)
-    csv_file= request.FILES["file"]
-    category=  request.POST.getlist('inputs')
-    #print(category)
+
+    if request.user.is_superuser:
+
+        if request.method == "GET":
+            return render(request, template,prompt)
+        csv_file= request.FILES["file"]
+        category=  request.POST.getlist('inputs')
+
+
+        print(category)
+
     #if not csv_file.name.endwith('.csv'):
        # message.error(request,"wrong file format")
-    data_set =csv_file.read().decode('UTF-8')
-    io_string =io.StringIO(data_set)
-    next(io_string)
-    if category[0]=='country':
-        for colum in csv.reader(io_string, delimiter=',',quotechar='|'):
-           _, created = Country.objects.update_or_create(
+        if category !=[]:
+            if category[0]=='country':
+               print(category)
+               message= uploadutils.upload_county(csv_file)
 
-            countryId=colum[0],
-            iso2Code=colum[1],
-            name=colum[2],
-            region=colum[3],
-            regionIso=colum[4],
-            regionValue= colum[5]
-            )
-        print(category)
-    elif category[0]=='countryDetails':
-        print('selection two')
-        for colum in csv.reader(io_string, delimiter=',',quotechar='|'):
-            _, created = CountryDetails.objects.update_or_create(
+        #return render(request,template,context)
 
-            countryId=colum[0],
-            capitalCity= colum[1],
-            longitude=colum[2],
-            latitude= colum[3]
+            elif category[0]=='countryDetails':
+                print(category)
+                message= uploadutils.upload_details(csv_file)
 
-        )
-    elif category[0]=='city':
-        for colum in csv.reader(io_string, delimiter=',',quotechar='|'):
-            _, created = CountryCity.objects.update_or_create(
+        #return render(request,template,context)
 
-            countryName= colum[0],
-            city=colum[1],
-            geonameid= colum[2]
 
-        )
-    context ={}
-    return render(request, template, context)
+            elif category[0]=='city':
+                message= uploadutils.upload_city(csv_file)
 
+            else:
+                message= "nothing to upload"
+
+
+            context={
+                "message":message
+                }
+            return render(request, template, context)
+        else:
+            message= "Please select the category to upload"
+            context={
+                "message":message
+                }
+            return render(request, template, context)
 def searchforAttraction(request):
     global offset
     global radius
@@ -217,7 +215,7 @@ def searchforAttraction(request):
         'coordinates':coordinates
         }
 
-    return render(request,'location.html',context)
+    return render(request,'Country/location.html',context)
 
 
 def loadtheList(request):
@@ -319,6 +317,6 @@ def getKind(data):
            val= 'Gardens and Parks'
 
     else:
-           val= 'interesting places'
+           val= 'Interesting places'
 
     return val

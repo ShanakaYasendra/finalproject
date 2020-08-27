@@ -1,37 +1,78 @@
-{%if messages %}
-    {% for message in messages %}
-    <div>
-        <strong>{{message|safe}}</strong>
-        </div>
+{% extends "layout.html" %}
 
-    {% endfor %}
- {% else %}
+{% block head %}
 
- {{ order }}
- <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <lable> upload a file</lable>
-    <input type= "file" name= "file">
-  
+{% block title %}
+Admin - Upload
+{% endblock %}
 
-    <div class="form-check">
-  <input class="form-check-input" type="radio" name="inputs" id="country" value="country">
-  <label class="form-check-label" for="country">
-    Country
-  </label>
+
+{% endblock %}
+{% block body%}
+
+
+
+{% if message %}
+<div class="row">
+
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="inputs" id="countryDetails" value="countryDetails">
-  <label class="form-check-label" for="countryDetails">
-    Country Details
-  </label>
-</div>
-<div class="form-check disabled">
-  <input class="form-check-input" type="radio" name="inputs" id="city" value="city" >
-  <label class="form-check-label" for="city">
-    City
-  </label>
-</div>
-    <button type="submit">upload</button>
- </form>
- {%  endif%}
+
+
+
+    <div class="alert alert-success" role="alert">
+
+        <strong>{{message}}</strong>
+
+      </div>
+
+{% else %}
+<div class="alert alert-primary" role="alert">
+  {{ order }}
+  </div>
+ {% endif %}
+
+
+
+    <form method="POST" enctype="multipart/form-data">
+       {% csrf_token %}
+       <div class="input-group mb-3">
+       <!--lable> Upload a file</lable-->
+        <div class="custom-file">
+       <input type= "file" name= "file" class="custom-file-input" id="inputGroupFile01"  required>
+       <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+       </div>
+       </div>
+
+     <div class="form-group form-check">
+
+             <input class="form-check-input" type="radio" name="inputs" id="countryDetails" value="countryDetails">
+             <label class="form-check-label" for="countryDetails">
+               Country Details
+             </label>
+
+       </div>
+         <div class="form-group form-check">
+
+             <input class="form-check-input" type="radio" name="inputs" id="city" value="city" >
+             <label class="form-check-label" for="city">
+               City
+             </label>
+           </div>
+           <div class="form-group form-check">
+             <input class="form-check-input" type="radio" name="inputs" id="country1" value="country">
+
+               <label class="form-check-label" for="country1">
+               Country
+             </label>
+
+         </div>
+
+       <button type="submit" class="btn btn-primary">upload</button>
+
+    </form>
+
+
+
+
+
+ {% endblock %}
