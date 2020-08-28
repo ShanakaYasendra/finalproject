@@ -9,6 +9,7 @@ import json
 
 from .models import Country,CountryDetails,CountryCity
 from . import uploadutils
+from . import util
 # Create your views here.
 wetherApi='28719ed44bffb67e022e502067349ca0'
 news_api_key='391409f008894221b310aec8d3d276d5'
@@ -72,7 +73,7 @@ def searchData(request):
     #print(con_pop_res)
     news_url='https://newsapi.org/v2/top-headlines?country={}&apiKey={}'
     news_response=requests.get(news_url.format(country,news_api_key)).json()
-    #print(news_response)
+    print(news_response['articles'])
 
 
     travel_url='https://www.travel-advisory.info/api?countrycode={}?format=json'
@@ -129,11 +130,16 @@ def contact_upload(request):
         category=  request.POST.getlist('inputs')
 
 
-        print(category)
+        #print(csv_file.endswith('.csv'))
 
-    #if not csv_file.name.endwith('.csv'):
-       # message.error(request,"wrong file format")
-        if category !=[]:
+        if not csv_file.name.endswith(".csv"):
+             message= "wrong file format"
+             context={
+                 "message": message
+             }
+             return render(request,template,context)
+        
+        elif category !=[]:
             if category[0]=='country':
                print(category)
                message= uploadutils.upload_county(csv_file)
@@ -170,7 +176,7 @@ def searchforAttraction(request):
     global city_lat
     global city_lon
 
-    print('hello')
+    #print('hello')
 
     if request.method =='POST':
 
@@ -198,7 +204,7 @@ def searchforAttraction(request):
             coordinates.append(key["geometry"]['coordinates'])
             #location_dict.append(name)
             location_dict[key['properties']['name']]=[]
-            message={'kind':getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid']}
+            message={'kind':util.getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid']}
             location_dict[name].append(message)
 
 
@@ -251,72 +257,3 @@ def attDeatils(request,xid):
 
     }
     return JsonResponse(attraction)
-
-def getKind(data):
-    #print(data)
-    if 'shops,squares,malls' in data:
-          val= 'Shops,Squares,Malls'
-    elif 'shops,malls,tourist_facilities' in data:
-          val= 'Shops,Malls,Tourist facilities'
-    elif 'bridges,architecture,interesting_places,other_bridges' in data:
-          val= 'Bridges,Architecture'
-    elif 'towers,architecture,interesting_places,other_towers'in data:
-         val= 'Towers,Architecture'
-    elif 'museums'in data:
-           val= 'Museums,Cultural'
-
-    elif 'skyscrapers,architecture,interesting_places'in data:
-           val= 'Skyscrapers,Architecture'
-
-    elif 'other_temples'in data:
-           val= 'Religion,Buddhist Temple'
-    elif  'buddhist_temples' in data:
-           val= 'Religion,Buddhist Temple'
-    elif 'churches'in data:
-           val= 'Religion,Churches'
-    elif 'mosques'in data:
-           val= 'Religion,Mosque'
-
-    elif 'hindu_temples'in data:
-           val= 'Religion, Hindu Temple'
-    elif 'other,unclassified_objects,interesting_places,tourist_object'in data:
-           val='Other,Tourist'
-
-
-    elif 'lighthouses,architecture,interesting_places'in data:
-           val='Lighthouses'
-
-
-    elif 'view_points,other,interesting_places'in data:
-           val= 'Other'
-
-    elif 'cinemas'in data:
-           val='Cinemas'
-
-
-    elif 'hotels'in data:
-           val='Hotel'
-
-
-    elif 'banks'in data:
-           val='Banks'
-
-
-    elif 'zoos'in data:
-           val='Zoo'
-
-    elif 'historic,monuments_and_memorials'in data:
-           val='Historic,Monuments and Memorials'
-
-
-    elif 'other_theatres'in data:
-           val='Theatres'
-
-
-    elif 'gardens_and_parks'in data:
-           val= 'Gardens and Parks'
-
-    else:
-           val= 'Interesting places'
-
-    return val
