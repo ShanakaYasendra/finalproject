@@ -8,42 +8,56 @@
     {% endblock %}
     {% block body%}
 
-    <form id="search" method="POST" action="{% url 'searchData' %}">
-        {% csrf_token %}
-        <div class="container" id="weather">
-        </div>
+    <div class="overlay"></div>
+    <br>
+    <br>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+          <div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>Explore <br></strong> your amazing Country</h1>
+            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Find great Attractions</p>
+            <div class="block-17 my-4">
+            </div>
+          
+              <form id="search" method="POST" action="{% url 'searchData' %}">
+              {% csrf_token %}
+                           
 
-   {% if messages %}
-       <div class="form-group">
+                      {% if messages %}
+                          <div class="form-group">
 
-      <label class="error-messages" > {{ messages }}</label>
-
-
-</div>
-   {% endif %}
-
-  <div class="form-row align-items-center">
-
-
-    <div class="col-auto">
-
-      <input type="text" name="searchVal" id="searchVal" list="json-datalist"  class="form-control mb-2" placeholder="Enter Country to Search" size="80" required>
-      <datalist id="json-datalist">
+                          <label class="error-messages" > {{ messages }}</label>
 
 
-      {% for i in county_all%}
-      <option value="{{i.name}}">{{i.iso2Code}}</option>
-      {% endfor%}
-      </datalist>
+                    </div>
+                      {% endif %}
 
-    </div>
+                      <div class="form-row align-items-center">
 
 
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary mb-2">Submit</button>
-    </div>
+                        <div class="col-auto">
 
-  </div>
-</form>
+                          <input type="text" name="searchVal" id="searchVal" list="json-datalist"  class="form-control mb-2" placeholder="Enter Country to Search" size="80" required>
+                          <datalist id="json-datalist">
+
+
+                          {% for i in county_all%}
+                          <option value="{{i.name}}">{{i.iso2Code}}</option>
+                          {% endfor%}
+                          </datalist>
+
+                        </div>
+
+
+                        <div class="col-auto">
+                          <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                        </div>
+
+                      </div>
+                    </form>
+            </div>
+          </div>
+          </div>
+      </div>
 
         {% endblock %}

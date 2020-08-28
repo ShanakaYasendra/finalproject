@@ -19,7 +19,7 @@ BFA,BF,Burkina Faso,SSF,ZG,Sub-Saharan Africa
 BGD,BD,Bangladesh,SAS,8S,South Asia
 BGR,BG,Bulgaria,ECS,Z7,Europe & Central Asia
 BHR,BH,Bahrain,MEA,ZQ,Middle East & North Africa
-BHS,BS,"Bahamas, The",LCN,ZJ,Latin America & Caribbean 
+BHS,BS,Bahamas,LCN,ZJ,Latin America & Caribbean 
 BIH,BA,Bosnia and Herzegovina,ECS,Z7,Europe & Central Asia
 BLR,BY,Belarus,ECS,Z7,Europe & Central Asia
 BLZ,BZ,Belize,LCN,ZJ,Latin America & Caribbean 
@@ -78,7 +78,7 @@ GRL,GL,Greenland,ECS,Z7,Europe & Central Asia
 GTM,GT,Guatemala,LCN,ZJ,Latin America & Caribbean 
 GUM,GU,Guam,EAS,Z4,East Asia & Pacific
 GUY,GY,Guyana,LCN,ZJ,Latin America & Caribbean 
-HKG,HK,"Hong Kong SAR, China",EAS,Z4,East Asia & Pacific
+HKG,HK,Hong Kong ,EAS,Z4,East Asia & Pacific
 HND,HN,Honduras,LCN,ZJ,Latin America & Caribbean 
 HRV,HR,Croatia,ECS,Z7,Europe & Central Asia
 HTI,HT,Haiti,LCN,ZJ,Latin America & Caribbean 

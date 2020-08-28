@@ -70,13 +70,13 @@ $.ajax({
 
           if( typeof(mainpageDiv) !='undefined' && mainpageDiv != null)
           {
-              ptag.innerHTML+='<br>'+data.description.toUpperCase();
+              ptag.innerHTML+='<br>'+'Current Wether in your Area' + data.description;
               mainpageDiv.appendChild(img);
               mainpageDiv.appendChild(ptag);
           }
           else {
                 imgLoc.appendChild(img)
-                 document.getElementById('getLocation').innerHTML+=data.temperature;
+                 document.getElementById('getLocation').append(ptag);
           }
 
 

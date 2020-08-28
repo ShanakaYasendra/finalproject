@@ -3,6 +3,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   {% load static %}
   <!--main css -->
   <link rel="stylesheet" href="{% static 'main.css' %}">
@@ -41,27 +42,10 @@ crossorigin=""></script>
 
     <!-- page layout -->
 
-    <div class="row">
-      <div class="col">
-
-
-      </div>
-      <div class="col">
-        <!-- heading area --->
-        <div class="heading" id ="caption_id">
-          <h1>Fun With Countries</h1>
-
-        </div>
-
-      </div>
-
-
-      <div class="col">
-
-      </div>
-    </div>
         <!--- Navigation Area -->
-    <div class="row">
+
+        
+    <!--div class="row">
       <div class="col-lg-2">
 
       </div>
@@ -101,30 +85,57 @@ crossorigin=""></script>
                         <span id="image"></span>
                       </div>
 
-                        <!--img src="https://openweathermap.org/img/w/{{city_weather.icon}}.png"-->
+                       
 
 
 
                 </nav>
-          </div>
-          <div class="col-lg-2">
+          </div-->
+          <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+            <div class="container">
+              <a class="navbar-brand" href="{% url 'index' %}">Explore the World.</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+              </button>
+              <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                  {% if user.is_superuser %}
+                  <li class="nav-item"><a href="{% url 'Admin' %}" class="nav-link">Admin</a></li>
 
-          </div>
-        </div>
-          <div class="row">
-              <div class="col-lg-2">
+                  {% endif%}
+                  <li class="nav-item">
+                    <div class="widget">
+                      <div id="clock"></div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="widget">
 
+                  <span></span>
+
+                  <span id="getLocation">  </span>
+
+                  <span id="image"></span>
+                </div>
               </div>
-              <div class="col-lg-8">
+            </div>
+          </nav>
+
+
+    
+          <div class="hero-wrap js-fullheight">
+            <div class="row">
+              <div class="col col-lg-2 col-sm-1">
+            </div>
+            <div class="col col-lg-8 col-sm-10">
                 {% block body%}
                 {% endblock %}
-
-
-
               </div>
-              <div class="col-lg-2">
+                <div class="col col-lg-2 col-sm-1">
+            
 
-              </div>
+             
 
           </div>
 
