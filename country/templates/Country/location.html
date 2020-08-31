@@ -9,10 +9,26 @@ City Attraction
 {% endblock %}
 {% block body%}
 
+  <div class ="wether forcast">
+    <div class="row">
+    {{daily_weather}}
+    
+    {% for i in daily_Weather.daily %}
+      
+    <div class="col">
+    <img src="https://openweathermap.org/img/w/{{i.weather.0.icon}}.png"></br>
+    <span>{{i.temp.day}}</span>
+  </div>
+    {% endfor %}
+   </div>
+  </div>
+
+
 <div class="row">
 
   <div class="col">
     <!-- heading area --->
+  </br>
     <div class="heading" id ="count">
 
 <h3>  {{count.count}} Attraction found {{city}}</h3>
@@ -42,13 +58,15 @@ City Attraction
 
   {% endfor %}
   </div>
+</br>
+
   {% if count.count > 5 %}
             <nav class="text-center">
-                  <button id="next_button" type="button" class="btn btn-primary" onclick="loadlist()">Next (5 of {{count.count}})</button>
+                  <button id="next_button" type="button" class="btn btn-primary btn-lg btn-block" onclick="loadlist()">Next (5 of {{count.count}})</button>
               </nav>
   {% endif %}
   </div>
-<div class="col-12 col-lg-7">
+<div class="col-sm-10 col-lg-7">
 
 
 

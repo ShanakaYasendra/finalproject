@@ -19,6 +19,8 @@ radius=0
 city_lon= ''
 city_lat=''
 
+
+# Main page loading this will return the country list from the model
 def index(request):
     try:
         county_all= Country.objects.all()
@@ -31,6 +33,7 @@ def index(request):
         }
     return render(request,"Country/index.html",context)
 
+# This view returns the Weather of the current user location as a Json
 def weather(request):
     lat = request.GET['Latitude']
     lon = request.GET['Longitude']
@@ -44,6 +47,16 @@ def weather(request):
 
     return JsonResponse(city_weather)
 
+# dailywether view return the next 7 days weather forcast
+def dailyweather(lat,lon):
+
+    url='https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&exclude=hourly,minutely,current&&units=metric&appid={}'
+    daily_res=requests.get(url.format(lat,lon,wetherApi)).json()
+    #print(daily_res)
+    return daily_res
+
+#Return the coutry detais base on the search input from the main page and pass the data to results page
+#use model query for county, country detais and city details
 def searchData(request):
 
     if request.method =='POST':
@@ -116,6 +129,8 @@ def searchData(request):
 
     return render(request,'Country/resultPage.html',context)
 
+
+#Admin function  wich allow superusers to upload the data to the Country tables
 def contact_upload(request):
     template='contact_upload.html'
     prompt={
@@ -170,6 +185,8 @@ def contact_upload(request):
                 "message":message
                 }
             return render(request, template, context)
+
+# Return the data for search city and the search radius
 def searchforAttraction(request):
     global offset
     global radius
@@ -182,7 +199,7 @@ def searchforAttraction(request):
 
         location=request.POST['city']
         radius=request.POST['radius']
-
+        
         location_url="https://api.opentripmap.com/0.1/en/places/geoname?apikey={}&name={}&format=json"
 
 
@@ -190,7 +207,7 @@ def searchforAttraction(request):
 
         city_lon=location_res['lon']
         city_lat=location_res['lat']
-
+        daily_weather=dailyweather(city_lat,city_lon)
         count_url='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset=0&lon={}&lat={}&rate=2&format=count&format=json'
         count_res=requests.get(count_url.format(opentripmap_api_key,radius,city_lon,city_lat)).json()
         attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
@@ -218,12 +235,13 @@ def searchforAttraction(request):
         'city':location,
         'city_lon':city_lon,
         'city_lat':city_lat,
-        'coordinates':coordinates
+        'coordinates':coordinates,
+        'daily_Weather':daily_weather
         }
 
     return render(request,'Country/location.html',context)
 
-
+# this will retrun data to next page list
 def loadtheList(request):
         global offset
         global radius
@@ -236,6 +254,7 @@ def loadtheList(request):
         attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
         return JsonResponse(attaction_res)
 
+# Make the API call to bring the data for attarction
 def attDeatils(request,xid):
 
     attraction_url='https://api.opentripmap.com/0.1/en/places/xid/{}?apikey={}&format=json'
