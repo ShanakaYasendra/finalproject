@@ -122,6 +122,7 @@ function showDetails(xid){
 
 function onShowPOI(data) {
       let poi = document.getElementById("poi");
+      //poi.setAttribute()
       poi.innerHTML = "";
       if (data.preview) {
         poi.innerHTML += `<img src="${data.preview.source}">`;

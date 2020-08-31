@@ -63,22 +63,15 @@ Country Details
 <!--Map and Flag  --->
 
 <div class="row">
-  <table class="countrymap">
-    <tr>
-
-
-  <th>
-  <div id="map" style="width: 400px; height: 400px;" class="countryimage" ></div>
-
-</th>
-<th>
-<div id="flag"style="width: 400px; height: 400px;"class="countryimage">
-  <img src="http://www.geonames.org/flags/x/{{country.flag}}.gif" style="width: 400px; height: 300px;">
-
+ <div class="col-lg-4 col-sm-6">
+  <div id="map"  class="countryimage" ></div>
 </div>
-</th>
-</tr>
-</table>
+<div class="col-lg-4 col-sm-6">
+  <div class="countryimage">
+  <img src="http://www.geonames.org/flags/x/{{country.flag}}.gif" id="flag">
+  </div>
+</div>
+
 </div>
 
 <!--Travel Advice --->
