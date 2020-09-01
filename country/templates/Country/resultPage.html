@@ -16,7 +16,7 @@ Country Details
 
 <!--Country Details --->
 <div class="row">
-
+<div class="col-lg-4 col-sm-6">
 
 <div id ="CountryDetails">
   <table id="country">
@@ -60,6 +60,8 @@ Country Details
 </div>
 </div>
 
+
+</div>
 <!--Map and Flag  --->
 
 <div class="row">
@@ -77,8 +79,12 @@ Country Details
 <!--Travel Advice --->
 <div class="row">
 
+<div class="col-lg-2 col-sm-2">
 
-<caption> Travel Advice</caption>  <br>
+</div>
+<div class="col-lg-8 col-sm-8">
+<h2> Travel Advice</h2>
+ <br>
 {% if travel_advice.score >  4.5 and travel_advice.score <= 5 %}
 
   <div class="alert alert-danger" role="alert">
@@ -143,14 +149,15 @@ Country Details
 
 {% endif %}
 </div>
-
+</div>
 <br>
 <br>
 <!--Country News --->
 
 <div class="row">
+  <div class="col-lg-8 col-sm-8">
   {% if country_news.total > 0 %}
-<caption>{{country_news.country}} NEWS</caption>
+<h2>{{country_news.country}} NEWS</h2>
 <div id ="News">
 
 
@@ -159,7 +166,7 @@ Country Details
 {% for row in country_news.articles %}
   <tr>
     <th><a href="{{row.url}}"><span>{{row.title}}</span></a></th>
- 
+
   </tr>
     <tr>
       <td>{{row.description}}</td>
@@ -174,9 +181,10 @@ Country Details
 
 
 </div>
+
 {% endif %}
 </div>
-
+</div>
 <br>
 <br>
   <!-- Trigger the modal with a button -->

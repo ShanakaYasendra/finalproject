@@ -21,12 +21,12 @@
     <title>
       Home
             </title>
-      
+
         </head>
         <body onload="onloadfun()" style="background-image: url('static/image/bg7.jpeg');background-size: cover;background-position: center center;
         background-repeat: no-repeat;
         background-attachment: fixed; ">
-      
+
           <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
               <a class="navbar-brand" href="{% url 'index' %}">Explore the World.</a>
@@ -45,13 +45,13 @@
                       <div id="clock"></div>
                     </div>
                   </li>
-                
+
                 <li class="nav-item">
                 <div class="widget">
                   <span id="getLocation">{{city_weather.temperature}}  </span>
                   </div>
                 </li>
-               
+
               </ul>
 
 
@@ -66,21 +66,21 @@
               </div>
             </div>
           </nav>
-   
 
-    
+
+
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>Explore <br></strong> your amazing Country</h1>
-            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Find great Attractions</p>
+            <h1 class="mb-4" data-scrollax="properties: { translateY: '20%', opacity: 1.6 }"><strong>Explore <br></strong> your amazing World</h1>
+            <h3 data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Find  the great Attractions <br>& Hidden Gems</h3>
             <div class="block-17 my-4">
             </div>
           <section>
-           
+
               <form id="search" method="POST" action="{% url 'searchData' %}">
               {% csrf_token %}
-                           
+
 
                       {% if messages %}
                           <div class="form-group">
@@ -91,10 +91,10 @@
                     </div>
                       {% endif %}
 
-                     
-                     
-                        
-                       
+
+
+
+
 
 
 
@@ -117,11 +117,11 @@
                         </div>
 
 
-                      
+
 
                       </div>
                     </form>
-                  
+
                 </section>
             </div>
           </div>
@@ -129,5 +129,3 @@
 
         </body>
         </html>
-        
-       

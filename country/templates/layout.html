@@ -42,55 +42,6 @@ crossorigin=""></script>
 
     <!-- page layout -->
 
-        <!--- Navigation Area -->
-
-        
-    <!--div class="row">
-      <div class="col-lg-2">
-
-      </div>
-          <div class="col-lg-8">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                              <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
-                            </li>
-                            {% if user.is_superuser %}
-                            <li class="nav-item active">
-                              <a class="nav-link" href="{% url 'Admin' %}">Admin <span class="sr-only">(current)</span></a>
-                            </li>
-                            {% endif%}
-                            <li class="nav-item">
-                              <div class="widget">
-                                <div id="clock"></div>
-                              </div>
-                            </li>
-
-                          </ul>
-                        </div>
-
-                      <div class="widget">
-
-                        <span>{{city_weather.city}} </span>
-
-                        <span id="getLocation">{{city_weather.temperature}}  </span>
-
-                        <span id="image"></span>
-                      </div>
-
-                       
-
-
-
-                </nav>
-          </div-->
           <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
               <a class="navbar-brand" href="{% url 'index' %}">Explore the World.</a>
@@ -109,13 +60,13 @@ crossorigin=""></script>
                       <div id="clock"></div>
                     </div>
                   </li>
-                
+
                 <li class="nav-item">
                 <div class="widget">
                   <span id="getLocation">{{city_weather.temperature}}  </span>
                   </div>
                 </li>
-               
+
               </ul>
 
 
@@ -132,22 +83,22 @@ crossorigin=""></script>
           </nav>
 
 
-    
+
           <div class="hero-wrap">
             <div class="row">
-              <div class="col col-lg-2 col-sm-1">
+              <div class="col-lg-1 col-sm-2">
             </div>
-            <div class="col col-lg-8 col-sm-10">
+            <div class="col-lg-10 col-sm-8">
                 {% block body%}
                 {% endblock %}
               </div>
-                <div class="col col-lg-2 col-sm-1">
+                <div class="col-lg-1 col-sm-2">
                 </div>
             </div>
           </div>
-            
 
-             
+
+
 
 
   </body>

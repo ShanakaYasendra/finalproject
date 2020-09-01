@@ -18,11 +18,19 @@ offset=0
 radius=0
 city_lon= ''
 city_lat=''
-
+county=''
 
 # Main page loading this will return the country list from the model
 def index(request):
+    global county,offset,radius,city_lat,city_lon
+    county=''
+    offset=0
+    radius=0
+    city_lon= ''
+    city_lat=''
+    county=''
     try:
+
         county_all= Country.objects.all()
         context={
         'county_all':county_all}
@@ -58,14 +66,15 @@ def dailyweather(lat,lon):
 #Return the coutry detais base on the search input from the main page and pass the data to results page
 #use model query for county, country detais and city details
 def searchData(request):
-
+    global county
     if request.method =='POST':
         try :
             searchVal = request.POST["searchVal"]
+            county=searchVal
             country_Q= Country.objects.get(name=searchVal)
             countryDetails_q= CountryDetails.objects.get(countryId=country_Q.countryId)
-            countryCity_q= CountryCity.objects.filter(countryName=searchVal)
-            #print(countryCity_q)
+            countryCity_q= CountryCity.objects.filter(countryName=searchVal).order_by('city')
+            print(countryCity_q)
         except Exception as e:
             print(e)
             county_all= Country.objects.all()
@@ -86,7 +95,7 @@ def searchData(request):
     #print(con_pop_res)
     news_url='https://newsapi.org/v2/top-headlines?country={}&apiKey={}'
     news_response=requests.get(news_url.format(country,news_api_key)).json()
-    print(news_response['articles'])
+    #print(news_response['articles'])
 
 
     travel_url='https://www.travel-advisory.info/api?countrycode={}?format=json'
@@ -153,7 +162,7 @@ def contact_upload(request):
                  "message": message
              }
              return render(request,template,context)
-        
+
         elif category !=[]:
             if category[0]=='country':
                print(category)
@@ -192,6 +201,7 @@ def searchforAttraction(request):
     global radius
     global city_lat
     global city_lon
+    global county
 
     #print('hello')
 
@@ -199,7 +209,7 @@ def searchforAttraction(request):
 
         location=request.POST['city']
         radius=request.POST['radius']
-        
+        countryCity_q= CountryCity.objects.filter(countryName=county).order_by('city')
         location_url="https://api.opentripmap.com/0.1/en/places/geoname?apikey={}&name={}&format=json"
 
 
@@ -225,7 +235,7 @@ def searchforAttraction(request):
             location_dict[name].append(message)
 
 
-        print(coordinates)
+        #print(location_dict)
         offset=0
         count=count_res
         context={
@@ -236,7 +246,9 @@ def searchforAttraction(request):
         'city_lon':city_lon,
         'city_lat':city_lat,
         'coordinates':coordinates,
-        'daily_Weather':daily_weather
+        'daily_Weather':daily_weather,
+        'cityies':countryCity_q
+
         }
 
     return render(request,'Country/location.html',context)
@@ -259,12 +271,16 @@ def attDeatils(request,xid):
 
     attraction_url='https://api.opentripmap.com/0.1/en/places/xid/{}?apikey={}&format=json'
     attraction_res=requests.get(attraction_url.format(xid,opentripmap_api_key)).json()
+    try:
+        image=attraction_res['preview']
+    except Exception as e:
+        image=""    
+    try:
+        text= attraction_res['wikipedia_extracts']
+    except Exception as e:
+        text=""
 
-    image=attraction_res['preview']
-    text= attraction_res['wikipedia_extracts']
-    #name= attraction_res['wikipedia_extracts']
-
-    #print(attraction_res)
+    print(attraction_res)
     attraction={
     'preview':image,
     'wikipedia_extracts':text,
