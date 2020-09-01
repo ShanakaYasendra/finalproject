@@ -63,7 +63,7 @@ def dailyweather(lat,lon):
     #print(daily_res)
     return daily_res
 
-#Return the coutry detais base on the search input from the main page and pass the data to results page
+#Return the coutry detailsis base on the search input from the main page and pass the data to results page
 #use model query for county, country detais and city details
 def searchData(request):
     global county
@@ -74,7 +74,24 @@ def searchData(request):
             country_Q= Country.objects.get(name=searchVal)
             countryDetails_q= CountryDetails.objects.get(countryId=country_Q.countryId)
             countryCity_q= CountryCity.objects.filter(countryName=searchVal).order_by('city')
-            print(countryCity_q)
+            #print(countryCity_q)
+        except Exception as e:
+            #print(e)
+            county_all= Country.objects.all()
+            context={
+            "county_all": county_all,
+            "messages":"Can Not Find The Country"
+            }
+            return render(request,"Country/index.html",context)
+    else:
+        print(county)
+        try :
+            #searchVal = request.POST["searchVal"]
+            #county=searchVal
+            country_Q= Country.objects.get(name=county)
+            countryDetails_q= CountryDetails.objects.get(countryId=country_Q.countryId)
+            countryCity_q= CountryCity.objects.filter(countryName=county).order_by('city')
+            #print(countryCity_q)
         except Exception as e:
             print(e)
             county_all= Country.objects.all()
@@ -83,6 +100,7 @@ def searchData(request):
             "messages":"Can Not Find The Country"
             }
             return render(request,"Country/index.html",context)
+
     country=country_Q.iso2Code
     #print(country)
 
@@ -113,7 +131,7 @@ def searchData(request):
         'flag':country_Q.iso2Code.lower()
     }
 
-    print(travel_res['data'][country]['advisory']['updated'])
+    #print(travel_res['data'][country]['advisory']['updated'])
     country_travel_advice={
     'score': travel_res['data'][country]['advisory']['score'],
     'updated':travel_res['data'][country]['advisory']['updated'],
@@ -229,14 +247,34 @@ def searchforAttraction(request):
             value=key['properties']['kinds']
             name=key['properties']['name']
             coordinates.append(key["geometry"]['coordinates'])
+            print(name)
             #location_dict.append(name)
             location_dict[key['properties']['name']]=[]
             message={'kind':util.getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid']}
             location_dict[name].append(message)
+            print(location_dict)
+        if len(location_dict)<5:
+            offset=len(location_dict)+5
+            coordinates.clear()
+            attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
+            attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
+            for key in attaction_res['features']:
+                value=key['properties']['kinds']
+                name=key['properties']['name']
+                coordinates.append(key["geometry"]['coordinates'])
+                print(name)
+                #location_dict.append(name)
+                location_dict[key['properties']['name']]=[]
+                message={'kind':util.getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid']}
+                location_dict[name].append(message)
+                print(location_dict)
+        else:
+            offset=0
+
 
 
         #print(location_dict)
-        offset=0
+
         count=count_res
         context={
         'attraction':attaction_res,
@@ -260,8 +298,8 @@ def loadtheList(request):
         global city_lat
         global city_lon
         offset+=5;
-        print(city_lat)
-        print(city_lon)
+        #print(city_lat)
+        #print(city_lon)
         attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
         attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
         return JsonResponse(attaction_res)
@@ -274,13 +312,13 @@ def attDeatils(request,xid):
     try:
         image=attraction_res['preview']
     except Exception as e:
-        image=""    
+        image=""
     try:
         text= attraction_res['wikipedia_extracts']
     except Exception as e:
         text=""
 
-    print(attraction_res)
+    #print(attraction_res)
     attraction={
     'preview':image,
     'wikipedia_extracts':text,

@@ -65,8 +65,13 @@ City Attraction
                   <button id="next_button" type="button" class="btn btn-primary btn-lg btn-block" onclick="loadlist()">Next (5 of {{count.count}})</button>
               </nav>
   {% endif %}
+
   <br>
-  
+  <nav class="text-center">
+        <a id="Cancel" type="button" class="btn btn-primary btn-lg btn-block" href="{% url 'searchData' %}">Go Back</a>
+    </nav>
+  <br>
+
   </div>
 
 
