@@ -65,10 +65,10 @@ Country Details
 <!--Map and Flag  --->
 
 <div class="row">
- <div class="col-lg-4 col-sm-6">
+ <div class="col-lg-5 col-sm-4">
   <div id="map"  class="countryimage" ></div>
 </div>
-<div class="col-lg-4 col-sm-6">
+<div class="col-lg-5 col-sm-4">
   <div class="countryimage">
   <img src="http://www.geonames.org/flags/x/{{country.flag}}.gif" id="flag">
   </div>
@@ -83,7 +83,7 @@ Country Details
 
 </div>
 <div class="col-lg-8 col-sm-8">
-<h2> Travel Advice</h2>
+<h2 style="margin-top: 20px"> Travel Advice</h2>
  <br>
 {% if travel_advice.score >  4.5 and travel_advice.score <= 5 %}
 
@@ -157,7 +157,7 @@ Country Details
 <div class="row">
   <div class="col-lg-10 col-sm-8">
   {% if country_news.total > 0 %}
-<h2>{{country_news.country}} NEWS</h2>
+<h2 style="margin-top: 20px">{{country_news.country}} NEWS</h2>
 <div id ="News">
 
 
@@ -186,11 +186,12 @@ Country Details
 </div>
 </div>
 <br>
-<br>
+
   <!-- Trigger the modal with a button -->
 <div class="row">
 
-  <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal"> Search For Country Attraction</button>
+  <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal" id="modelbutton"> Search For Country Attraction</button>
+
 </div>
 
 <!-- Modal -->

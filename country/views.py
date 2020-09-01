@@ -227,7 +227,7 @@ def searchforAttraction(request):
 
         location=request.POST['city']
         radius=request.POST['radius']
-        countryCity_q= CountryCity.objects.filter(countryName=county).order_by('city')
+        #countryCity_q= CountryCity.objects.filter(countryName=county).order_by('city')
         location_url="https://api.opentripmap.com/0.1/en/places/geoname?apikey={}&name={}&format=json"
 
 
@@ -277,7 +277,7 @@ def searchforAttraction(request):
 
         count=count_res
         context={
-        'attraction':attaction_res,
+        #'attraction':attaction_res,
         'count':count_res,
         'location':location_dict,
         'city':location,
@@ -285,7 +285,7 @@ def searchforAttraction(request):
         'city_lat':city_lat,
         'coordinates':coordinates,
         'daily_Weather':daily_weather,
-        'cityies':countryCity_q
+        #'cityies':countryCity_q
 
         }
 
