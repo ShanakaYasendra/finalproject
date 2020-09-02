@@ -68,7 +68,7 @@ City Attraction
 
   <br>
   <nav class="text-center">
-        <a id="Cancel" type="button" class="btn btn-primary btn-lg btn-block" href="{% url 'searchData' %}">Go Back</a>
+        <a id="Cancel" type="button" class="btn btn-primary btn-lg btn-block" href="{% url 'searchData' %}">Back To Country</a>
     </nav>
   <br>
 
@@ -98,6 +98,7 @@ City Attraction
   var city_lon={{city_lon}}
   var city_lat={{city_lat}}
   var locArray={{coordinates}}
+  //var location={{location}}
   mymap = L.map( 'poi', {
     center: [20.0, 5.0],
     minZoom: 2,
@@ -108,6 +109,7 @@ City Attraction
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 
   }).addTo( mymap );
+ 
 
   for (var i = 0; i < locArray.length; i++) {
       let a=locArray[i][0];
