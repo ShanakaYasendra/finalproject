@@ -1,6 +1,6 @@
 import csv,io
 from .models import Country,CountryDetails,CountryCity
-def upload_county(csv_file):
+def upload_country(csv_file):
     try:
         data_set =csv_file.read().decode('UTF-8')
         io_string =io.StringIO(data_set)

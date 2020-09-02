@@ -238,7 +238,11 @@ else if (item.includes('skyscrapers,architecture,interesting_places')) {
 
   return 'Skyscrapers,Architecture'
 }
-else if ((item.includes('religion,other_temples'))||(item.includes('religion,buddhist_temples')) ){
+else if (item.includes('religion,other_temples')){
+  return 'Religion,Religion Place'
+
+}
+else if (item.includes('religion,buddhist_temples')) {
   return 'Religion,Buddhist Temple'
 
 }
@@ -251,7 +255,7 @@ else if (item.includes('religion,mosques')) {
 
 }
 else if (item.includes('religion,hindu_temples')) {
-  return 'Religion,Temple'
+  return 'Religion, Hindu Temple'
 
 }
 else if (item.includes('other,unclassified_objects,interesting_places,tourist_object')) {

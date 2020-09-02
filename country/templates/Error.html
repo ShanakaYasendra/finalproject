@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}
+Error
+{% endblock%}
+{% block body%}
+
+
+  <div class="errorh">
+  <center><h1><i><u>Opps</u>!!!</i></h1></center>
+  </div>
+
+  <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Sorry, something went wrong!!!</h4>
+      <p>{{ messege }}<a href="/">Click here</a>
+
+      </p>
+      <hr>
+
+  </div>
+
+
+{% endblock %}

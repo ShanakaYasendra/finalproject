@@ -20,7 +20,7 @@ def getKind(data):
            val= 'Skyscrapers,Architecture'
 
     elif 'other_temples'in data:
-           val= 'Religion,Buddhist Temple'
+           val= 'Religion'
     elif  'buddhist_temples' in data:
            val= 'Religion,Buddhist Temple'
     elif 'churches'in data:
@@ -77,16 +77,17 @@ def getAttraction(opentripmap_api_key,radius,limit,offset,city_lon,city_lat):
     location_dict={}
     attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit={}&offset={}&lon={}&lat={}&rate=2'
     attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,limit,offset,city_lon,city_lat)).json()
+    #print(attaction_res)
     for key in attaction_res['features']:
         value=key['properties']['kinds']
         name=key['properties']['name']
         coordinates.append(key["geometry"]['coordinates'])
-        print(name)
+        #print(name)
         #location_dict.append(name)
         location_dict[key['properties']['name']]=[]
         message={'kind':getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid']}
         location_dict[name].append(message)
-        print(location_dict)
+        #print(location_dict)
     context={
     "location_dict":location_dict,
     "coordinates":coordinates
