@@ -235,6 +235,7 @@ def searchforAttraction(request):
 
         city_lon=location_res['lon']
         city_lat=location_res['lat']
+
         daily_weather=dailyweather(city_lat,city_lon)
         count_url='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset=0&lon={}&lat={}&rate=2&format=count&format=json'
         count_res=requests.get(count_url.format(opentripmap_api_key,radius,city_lon,city_lat)).json()
@@ -243,31 +244,16 @@ def searchforAttraction(request):
 
         coordinates=[]
         location_dict={}
-        for key in attaction_res['features']:
-            value=key['properties']['kinds']
-            name=key['properties']['name']
-            coordinates.append(key["geometry"]['coordinates'])
-            print(name)
-            #location_dict.append(name)
-            location_dict[key['properties']['name']]=[]
-            message={'kind':util.getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid']}
-            location_dict[name].append(message)
-            print(location_dict)
+        location_dict,coordinates=util.getAttraction(opentripmap_api_key,radius,5,offset,city_lon,city_lat)
+
+
         if len(location_dict)<5:
-            offset=len(location_dict)+5
+            dif= 5-len(location_dict)
+            limit=10
             coordinates.clear()
-            attaction_res='https://api.opentripmap.com/0.1/en/places/radius?apikey={}&radius={}000&limit=5&offset={}&lon={}&lat={}&rate=2'
-            attaction_res=requests.get(attaction_res.format(opentripmap_api_key,radius,offset,city_lon,city_lat)).json()
-            for key in attaction_res['features']:
-                value=key['properties']['kinds']
-                name=key['properties']['name']
-                coordinates.append(key["geometry"]['coordinates'])
-                print(name)
-                #location_dict.append(name)
-                location_dict[key['properties']['name']]=[]
-                message={'kind':util.getKind(value),'name':key['properties']['name'],"xid":key['properties']['xid']}
-                location_dict[name].append(message)
-                print(location_dict)
+            #location_dict.clear()
+            location_dict,coordinates=util.getAttraction(opentripmap_api_key,radius,limit,offset,city_lon,city_lat)
+
         else:
             offset=0
 
