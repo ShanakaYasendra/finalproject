@@ -107,20 +107,24 @@ text-align: center;
 
   }
   .countryimage{
+    margin-left: 10%;
     width: 300px;
     height: 300px;
   }
   #flag{
+    margin-left: 10%;
     width: 300px;
     height: 300px;
   }
 
     @media screen and (max-width: 992px) {
       .map{
+        margin-left: 10%;
         width: 300px;
         height: 300px;
       }
       #flag{
+        margin-left: 10%;
         width: 300px;
         height: 300px;
       }
@@ -131,6 +135,7 @@ text-align: center;
 
       }
       #poi{
+        
         width: 500px;
         height: 600px
 
@@ -140,11 +145,16 @@ text-align: center;
  /* On screens that are 600px wide or less, the background color is olive */
  @media screen and (max-width: 400px) {
    .map{
+    margin-left: 5%;
      width: 300px;
      height: 300px;
      align-items: center;
    }
+   .countryimage{
+    margin-left: 15%;}
    #flag{
+     margin-top: 5px;
+    margin-left: 5%;
      width: 300px;
      height: 300px;
       align-items: center;
@@ -156,6 +166,7 @@ text-align: center;
       align-items: center;
    }
    #poi{
+     margin-left: 15%;
      width: 300px;
      height: 600px
      overflow: auto;
@@ -167,6 +178,7 @@ text-align: center;
       align-items: center;
    }
    #News{
+      margin-left: 3%;
        width:380px;
        height: 400px;
        border-radius: 10px;
