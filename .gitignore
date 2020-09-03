@@ -1,0 +1,6 @@
+db.sqlite3
+country/__pycache__/uploadutils.cpython-37.pyc
+country/__pycache__/util.cpython-37.pyc
+country/__pycache__/views.cpython-37.pyc
+mysite/settings.py
+mysite/__pycache__/settings.cpython-37.pyc
